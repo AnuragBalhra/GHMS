@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% block menu %}
+    {% include "menu.html" %}
+    {% endblock %}
+    
+    {% block content %}{% endblock %}
+
+    {% block footer %}
+    <div style="position:ablolute;bottom:0px;width:100%;">
+    	<hr>
+    	<p>Thanks for visiting my site.</p>
+	</div>
+    {% endblock %}
+</body>
+</html>
