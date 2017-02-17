@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^hello/$', hello),
     url(r'^$',home),
-    url(r'^login/$',login),
+    url(r'^login/$',login , name='login'),
+    url(r'^profile/$',profile , name='profile'),
+    # url(r'^search/$',search , name='search'),
+    # url(r'^bookings/$',bookings , name='bookings'),
 
 ]

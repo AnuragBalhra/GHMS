@@ -8,8 +8,14 @@
 
 {% block content %}
     <form action="/login/" method="POST">
+    {% csrf_token %}
         Username:<input type="text" name="username"><br>
         Password:<input type="password" name="password"><br>
+        Type:<select name="type">
+        	<option value='admin'>Admin</option>
+        	<option value='user'>Student</option>
+        	</select>
+        	<br>
         <input type="submit" value="Log In">
     </form>
 {% endblock %}

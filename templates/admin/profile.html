@@ -1,5 +1,4 @@
 {% extends "includes/base.html" %}
-{% if 'visitor' in request.session %}
 
 {% block title %}User Profile{% endblock %}
 
@@ -8,7 +7,6 @@
 {% endblock %}
 
 {% block content %}
-    {{request.session.visitor.Name}}
-
+    {{user.Name}}
+    
 {% endblock %}
-{% endif %}
