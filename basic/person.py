@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from datetime import datetime
 from django.db import models
-
+from django.contrib.sessions.backends.db import SessionStore
 
 
 
@@ -17,4 +17,11 @@ class Person(models.Model):
 
 	class Meta:
 		ordering = ['Id']
+
+	def login(self, username, password, type):
+		import basic.dataBase as DB
+		return(DB.DBMS.check(username,password, type))
+
+
+		# return(check(email, password)) 
 

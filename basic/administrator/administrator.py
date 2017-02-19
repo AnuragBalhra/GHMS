@@ -1,5 +1,5 @@
-from basic.person import *
-class Administrator(Person):
+import basic.person as bp
+class Administrator(bp.Person):
 	def addUser(self, usr):
 		usr=DBMS.store(usr)
 		return usr

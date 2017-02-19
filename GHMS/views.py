@@ -5,12 +5,12 @@ from django.template import Template,Context
 from django.shortcuts import get_object_or_404, render, redirect
 
 
-from basic.user import *
-from basic.admin import *
-from basic.food import *
-from basic.booking import *
-from basic.guestHouse import *
-from basic.dataBase import *
+from basic.user.user import User
+from basic.administrator.administrator import Administrator
+from basic.food import Food
+from basic.booking import Booking
+from basic.guestHouse import guestHouse
+from basic.dataBase import dataBase
 
 
 def hello(request):
@@ -67,8 +67,9 @@ def login(request):
 		password=request.POST['password']
 		type=request.POST['type']
 		
+		user=User(username,password,type)
 		try:
-			if(DBMS.check(username, password, type)!=True):
+			if(user.login(username,password, type)!=True):
 				request.session['err']="Check Username , password and role"
 				return redirect('logout')
 		except:
@@ -99,9 +100,10 @@ def login(request):
 		# return HttpResponse("Hello world")
 		# exit()
 		# request.session['logged_in']=False
-		# request.session['err']=""
+		err=request.session['err']
+		request.session['err']=""
 		# exit()
-		return render(request, 'login.html', {'title':'GuestHouse Login', 'err':request.session['err']})
+		return render(request, 'login.html', {'title':'GuestHouse Login', 'err':err})
 
 def logout(request):
 	request.session['logged_in']=False

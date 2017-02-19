@@ -7,16 +7,33 @@
 {% endblock %}
 
 {% block content %}
+    <div class="container">
+    <div class="row">
+        <div class="col m4 l4 s12 push-l3">
     <span style="color:red;">{{err}}</span>
-    <form action="/login/" method="POST">
-    {% csrf_token %}
-        Username:<input type="text" name="username"><br>
-        Password:<input type="password" name="password"><br>
-        Type:<select name="type">
-        	<option value='admin'>Admin</option>
-        	<option value='user'>Student</option>
-        	</select>
-        	<br>
-        <input type="submit" value="Log In">
-    </form>
+            <form action="/login/" method="POST">
+            {% csrf_token %}
+
+            Username:<input type="text" name="username"><br>
+            Password:<input type="password" name="password"><br>
+            <div class="input-field col s12">
+            Type:<select name="type"  class="browser-default" >
+
+            	<option value='admin'>Admin</option>
+            	<option value='user'>Student</option>
+            	</select>
+            </div> 
+            	<br><br>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Log In
+                <!-- <i class="material-icons right">send</i> -->
+                </button>
+            </form>
+        </div>
+        </div>
+    <script>
+    $(document).ready(function() {
+        $('select').material_select();
+        });
+  </script>
+  </div>
 {% endblock %}

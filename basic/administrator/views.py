@@ -30,4 +30,4 @@ def dashboard(request):
 		except:
 			all_bookings=None
 
-	return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings})
+	return render(request, 'admin/profile.html',{'visitor':visitor,'all_bookings':all_bookings})

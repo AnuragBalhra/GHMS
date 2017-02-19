@@ -34,3 +34,9 @@ def dashboard(request):
 
 	return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings})
     # return HttpResponse("User Hello world")
+
+
+
+def search(request):
+	visitor=get_object_or_404(User, Id=request.session['visitor']['id'])
+	visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'])

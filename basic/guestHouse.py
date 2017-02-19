@@ -1,12 +1,13 @@
-from room import *
-from booking import *
-from dataBase import dataBase, DBMS
+import basic.room as br
+import basic.booking as bb
+import basic.dataBase as bd
+from datetime import date
 
 class guestHouse:
 
 	def __init__(self):
-		self.bookings=DBMS.getBookings('user')
-		self.rooms=DBMS.getRooms()
+		self.bookings=bd.DBMS.getBookings('user')
+		self.rooms=bd.DBMS.getRooms()
 
 
 	# def checkUser(self, email, pass):
@@ -15,13 +16,15 @@ class guestHouse:
 	def freeRoom(self, buking, usr, checkOutTime):
 		pass
 	def checkRoomsAvailability(self, checkIn, checkOut):
+		checkIn=date(checkIn)
+		checkOut=date(checkOut)
 		delta=checkOut-checkIn
 		roomsList=[len(rooms)][delta.days]
 		for x in roomsList:
 			for y in x:
 				y=True
-		buking=booking(checkIn, checkOut)
-		allBookings=DBMS.getBookings()
+		buking=bb.booking(checkIn, checkOut)
+		allBookings=bd.DBMS.getBookings()
 		noConflict={}
 		for x in rooms:
 			noConflict[x.id]=True
@@ -37,7 +40,7 @@ class guestHouse:
 		cost=0
 		for x in noConflict:
 			if(noConflict[x]):
-				rum=DBMS.getRooms(x)
+				rum=bd.DBMS.getRooms(x)
 				return rum
 				
 

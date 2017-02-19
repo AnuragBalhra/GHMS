@@ -1,20 +1,20 @@
-from basic.person import *
-class User(Person):
-	def login(self, email, password):
-		return(check(email, password)) 
+import basic.person as bp
+# import basic.guestHouse as bg
+class User(bp.Person):
 
 	def cancelBooking(self, buking):
 		return(makeCancellation(buking.GNR)) 
 
 	def searchRoom(self, checkIn, checkOut):
-		rum=GHMS.checkRoomsAvailability(checkIn, checkOut)
+		import basic.guestHouse as bg
+		rum=bg.GHMS.checkRoomsAvailability(checkIn, checkOut)
 		try:
 			if(len(rum)>1):
 				return rum
 
 		except:
 			cost=rum.cost
-			buking=GHMS.bookRoom(self, rum, checkIn, checkOut)
+			buking=bg.GHMS.bookRoom(self, rum, checkIn, checkOut)
 			return buking.status
 
 
