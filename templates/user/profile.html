@@ -1,0 +1,14 @@
+{% extends "includes/base.html" %}
+{% if 'visitor' in request.session %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block menu %}
+{% include "includes/menu.html" %}
+{% endblock %}
+
+{% block content %}
+    {{request.session.visitor.Name}}
+
+{% endblock %}
+{% endif %}

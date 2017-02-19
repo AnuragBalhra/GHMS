@@ -15,14 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import include,url
 from django.contrib import admin
+
+
 from GHMS.views import *
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^Admin/', admin.site.urls),
     url(r'^hello/$', hello),
+    url(r'^admin/',include('basic.administrator.urls'),name='admin'),
+    url(r'^user/',include('basic.user.urls'),name='user'),
     url(r'^$',home),
     url(r'^login/$',login , name='login'),
-    url(r'^profile/$',profile , name='profile'),
+    url(r'^logout/$',logout , name='logout'),
+    # url(r'^profile/$',profile , name='profile'),
     # url(r'^search/$',search , name='search'),
     # url(r'^bookings/$',bookings , name='bookings'),
 

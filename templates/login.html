@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+    <span style="color:red;">{{err}}</span>
     <form action="/login/" method="POST">
     {% csrf_token %}
         Username:<input type="text" name="username"><br>
