@@ -52,22 +52,26 @@ def home(request):
 
 
 def login(request):
-    # return HttpResponse("Hello world")
-	try:
-		if(request.session['logged_in']==True):
-			request.session['err']="Already logged In"
-			return redirect('profile')
-	except:
-		request.session['err']="Not already logged In"
-		request.session['logged_in']=False
+	# return HttpResponse("Hello world")
+	# exit()
+	# try:
+	if(request.session['logged_in']==True):
+		request.session['err']="Already logged In"
+		return HttpResponseRedirect('../'+request.session['visitor']['type']+'/')
+	# except:
+		# request.session['err']="Not already logged In"
+		# request.session['logged_in']=False
 
 	if 'username' in request.POST and 'password' in request.POST and 'type' in request.POST:
 		username=request.POST['username']
 		password=request.POST['password']
 		type=request.POST['type']
 		
-
-		if(DBMS.check(username, password, type)!=True):
+		try:
+			if(DBMS.check(username, password, type)!=True):
+				request.session['err']="Check Username , password and role"
+				return redirect('logout')
+		except:
 			request.session['err']="Check Username , password and role"
 			return redirect('logout')
 
@@ -92,8 +96,11 @@ def login(request):
 			return HttpResponseRedirect('../user/')
 			# return redirect('user' )
 	else:
-		request.session['logged_in']=False
-		request.session['err']=""
+		# return HttpResponse("Hello world")
+		# exit()
+		# request.session['logged_in']=False
+		# request.session['err']=""
+		# exit()
 		return render(request, 'login.html', {'title':'GuestHouse Login', 'err':request.session['err']})
 
 def logout(request):
@@ -103,6 +110,6 @@ def logout(request):
 		request.session['err']="Successfully logged out"
 
 	except:
-		request.session['err']="Problem in logging out"
+		pass
 	return redirect('login')
 
