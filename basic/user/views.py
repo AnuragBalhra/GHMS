@@ -18,9 +18,19 @@ from basic.dataBase import *
 
 
 def dashboard(request):
-	if type=='admin':
+	if request.session['visitor']['type']=='admin':
 		visitor=get_object_or_404(Administrator, Id=request.session['visitor']['id'])
+		try:
+			all_bookings=DBMS.getBookings('admin')
+		except:
+			all_bookings=None
+
 	else:
 		visitor=get_object_or_404(User, Id=request.session['visitor']['id'])
-	return render(request, 'user/profile.html',{'visitor':visitor})
+		try:
+			all_bookings=DBMS.getBookings('user', visitor)
+		except:
+			all_bookings=None
+
+	return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings})
     # return HttpResponse("User Hello world")

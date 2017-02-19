@@ -1,4 +1,5 @@
 {% extends "includes/base.html" %}
+
 {% if 'visitor' in request.session %}
 
 {% block title %}User Profile{% endblock %}
@@ -11,6 +12,46 @@
 	Hey
     {{visitor.Id}}
     {{visitor.Name}}
+    <style>
+    	td{
+    		width:200px;
+    	}
+   	</style>
+    <table >
+    	<tr>
+			<td>GNR</td>
+			<td>UserId</td>
+			<td>RoomId</td>
+			<td>FoodId</td>
+			<td>StartTime</td>
+			<td>EndTime</td>
+			<td>AmountReq</td>
+			<td>AmountPaid</td>
+			<td>Status</td>
+			<td>Reason</td>
+			<td>BookingTime</td>
+		</tr>
+
+	{% for buking in all_bookings %}	
+		<tr>
+			<td>{{buking.GNR}}</td>
+			<td>{{buking.UserId}}</td>
+			<td>{{buking.RoomId}}</td>
+			<td>{{buking.FoodId}}</td>
+			<td>{{buking.StartTime}}</td>
+			<td>{{buking.EndTime}}</td>
+			<td>{{buking.AmountReq}}</td>
+			<td>{{buking.AmountPaid}}</td>
+			<td>{{buking.Status}}</td>
+			<td>{{buking.Reason}}</td>
+			<td>{{buking.BookingTime}}</td>
+		</tr>
+	{% endfor %}
+	</table>
 
 {% endblock %}
+
+
+
+
 {% endif %}

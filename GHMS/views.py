@@ -54,13 +54,13 @@ def home(request):
 def login(request):
 	# return HttpResponse("Hello world")
 	# exit()
-	# try:
-	if(request.session['logged_in']==True):
-		request.session['err']="Already logged In"
-		return HttpResponseRedirect('../'+request.session['visitor']['type']+'/')
-	# except:
-		# request.session['err']="Not already logged In"
-		# request.session['logged_in']=False
+	try:
+		if(request.session['logged_in']==True):
+			request.session['err']="Already logged In"
+			return HttpResponseRedirect('../'+request.session['visitor']['type']+'/')
+	except:
+		request.session['err']="Not already logged In"
+		request.session['logged_in']=False
 
 	if 'username' in request.POST and 'password' in request.POST and 'type' in request.POST:
 		username=request.POST['username']

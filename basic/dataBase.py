@@ -32,26 +32,26 @@ class dataBase:
 	def checkBookings(self, rooms, checkIn, checkOut):
 		return None
 
-	def getBookings(self, type, GNR=0, usr=None, rum=None):
+	def getBookings(self, type, usr=None, rum=None, GNR=0):
 		if(type=='admin'):
 			if(rum!=None):
-				bukings=get_object_or_404(Booking, room_no=rum.id)
+				bukings=Booking.objects.filter(RoomId=rum.id)
 				return bukings
 			if(usr!=None):
-				bukings=get_object_or_404(Booking, user_id=usr.id)
+				bukings=Booking.objects.filter(UserId=usr.id)
 				return bukings
 			if(GNR!=0):
-				bukings=get_object_or_404(Booking, GNR=GNR)
+				bukings=Booking.objects.filter(GNR=GNR)
 				return bukings
 			
 			bukings=Booking.objects.all
 			return bukings
 		else:
 			if(usr!=None):
-				bukings=get_object_or_404(Booking, user_id=usr.id)
+				bukings=Booking.objects.filter(UserId=usr.Id)
 				return bukings
 			if(GNR!=0):
-				bukings=get_object_or_404(Booking, GNR=GNR)
+				bukings=Booking.objects.filter(GNR=GNR)
 				return bukings
 			
 			bukings=Booking.objects.all
