@@ -36,27 +36,32 @@ class dataBase:
 	def getBookings(self, type, usr=None, rum=None, GNR=0):
 		if(type=='admin'):
 			if(rum!=None):
-				bukings=bb.Booking.objects.filter(RoomId=rum.id)
-				return bukings
+				bookings=bb.Booking.objects.filter(RoomId=rum.id)
+				return bookings
 			if(usr!=None):
-				bukings=bb.Booking.objects.filter(UserId=usr.id)
-				return bukings
+				bookings=bb.Booking.objects.filter(UserId=usr.id)
+				return bookings
 			if(GNR!=0):
-				bukings=bb.Booking.objects.filter(GNR=GNR)
-				return bukings
+				bookings=bb.Booking.objects.filter(GNR=GNR)
+				return bookings
 			
-			bukings=bb.Booking.objects.all
-			return bukings
+			bookings=bb.Booking.objects.all
+			return bookings
 		else:
 			if(usr!=None):
-				bukings=bb.Booking.objects.filter(UserId=usr.Id)
-				return bukings
+				bookings=bb.Booking.objects.filter(UserId=usr.Id)
+				return bookings
 			if(GNR!=0):
-				bukings=bb.Booking.objects.filter(GNR=GNR)
-				return bukings
+				bookings=bb.Booking.objects.filter(GNR=GNR)
+				return bookings
 			
-			bukings=bb.Booking.objects.all
-			return bukings
+			bookings=bb.Booking.objects.all()
+			# var="asd"
+			# for x in bookings:
+			# 	var+=str(x.UserId.Id)
+			# 	var+=" "
+			# raise Exception(bookings) # don't, if you catch, likely to hide bugs.
+			return bookings
 
 
 			
@@ -72,18 +77,21 @@ class dataBase:
 			users=get_object_or_404(bu.User, email=email)
 			return users
 		
-		users=bu.User.objects.all
+		users=bu.User.objects.all()
 		return users
 	def getRooms(self, roomNo=0):
 		if(roomNo!=0):
-			rooms=get_object_or_404(br.Room, id=roomNo)
+			# raise Exception(roomNo)
+			rooms=get_object_or_404(br.Room, Id=roomNo)
+			# raise Exception(rooms.Cost)
 			return rooms
 		
-		rooms=br.Room.objects.all
+		rooms=br.Room.objects.all()
+		# raise Exception(rooms)
 		return rooms
 
 	def getFoods(self):
-		foods=bf.Food.objects.all
+		foods=bf.Food.objects.all()
 		return foods
 
 	def store(self, obj):
@@ -109,17 +117,21 @@ class dataBase:
 			return obj2
 
 
-	def deleteObj(seelf, obj):
-		if(isinstance(obj, bu.User)):
-			bu.User.objects.filter(id=obj.id).delete()
-		elif(isinstance(obj, ba.Administrator)):
-			ba.Administrator.objects.filter(id=obj.id).delete()
-		elif(isinstance(obj, br.Room)):
-			br.Room.objects.filter(id=obj.id).delete()
-		elif(isinstance(obj, bb.Booking)):
-			bb.Booking.objects.filter(GNR=obj.GNR).delete()
-		elif(isinstance(obj, bf.Food)):
-			bf.Food.objects.filter(id=obj.id).delete()
+	def deleteObj(self, obj):
+		try:
+			if(isinstance(obj, bu.User)):
+				bu.User.objects.filter(id=obj.id).delete()
+			elif(isinstance(obj, ba.Administrator)):
+				ba.Administrator.objects.filter(id=obj.id).delete()
+			elif(isinstance(obj, br.Room)):
+				br.Room.objects.filter(id=obj.id).delete()
+			elif(isinstance(obj, bb.Booking)):
+				bb.Booking.objects.filter(GNR=obj.GNR).delete()
+			elif(isinstance(obj, bf.Food)):
+				bf.Food.objects.filter(id=obj.id).delete()
+			return "Success"
+		except:
+			return "Fail"
 
 
 DBMS=dataBase()

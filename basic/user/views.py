@@ -39,4 +39,21 @@ def dashboard(request):
 
 def search(request):
 	visitor=get_object_or_404(User, Id=request.session['visitor']['id'])
-	visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'])
+	obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'])
+	try:
+		if(isinstance(obj, Booking)):
+			return redirect('showBooking')
+			
+		return showRooms(obj)
+	except:
+		return showRooms(obj)
+
+	# return HttpResponse(available_rooms)
+
+def showBooking(booking):
+	raise Exception(booking)
+
+
+def showRooms(available_rooms):
+	raise Exception(available_rooms)
+

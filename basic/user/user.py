@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect,HttpResponse  
 import basic.person as bp
 # import basic.guestHouse as bg
 class User(bp.Person):
@@ -7,15 +8,19 @@ class User(bp.Person):
 
 	def searchRoom(self, checkIn, checkOut):
 		import basic.guestHouse as bg
-		rum=bg.GHMS.checkRoomsAvailability(checkIn, checkOut)
+		roomsList=bg.GHMS.checkRoomsAvailability(checkIn, checkOut)
+		# return HttpResponse(rum[0].Cost)
+
 		try:
-			if(len(rum)>1):
-				return rum
+			if(len(roomsList)>1):
+				return roomsList
 
 		except:
-			cost=rum.cost
-			buking=bg.GHMS.bookRoom(self, rum, checkIn, checkOut)
-			return buking.status
+			# cost=rum.cost
+			# raise Exception(rum.Cost)
+
+			buking=bg.GHMS.bookRoom(self, roomsList, checkIn, checkOut)
+			return buking
 
 
 	def getProfileInfo(self):
@@ -25,7 +30,9 @@ class User(bp.Person):
 		buking.status="WL"
 		DBMS.store(buking)
 	def makePayment(self, buking):
-		return None
+		import basic.guestHouse as bg
+		return bg.GHMS.makePayment(self, buking)
+
 	def requestRefund(self, buking):
 		return None
 
