@@ -2,11 +2,76 @@
 <!-- {% if 'visitor' in request.session %} -->
 
 {% block content %}
-{% for x in roomsList%}
-	{%for y in x %}
-		<span style='margin:10px;'>{{y}}</span>
+{#roomsList#}
+<hr>
+	<form action="{% url 'user:search' %} " method="POST">
+	{% csrf_token %}
+{% for roomNo, dates in roomsList.items%}
+    <div class="row">
+    <div class="col">
+	<span style="margin:20px;">RoomNo{{roomNo}}</span>
+	</div>
+	{%for date,availability in dates.items %}
+
+		<div class="col">
+    		<input type="checkbox" name="{{roomNo}}" id="{{roomNo}}_{{date}}" />
+     	 	<label for="{{roomNo}}_{{date}}">{{availability}}</label>
+     	 </div>
 	{%endfor%}
+
+    </div>
+
 	<br>
 {%endfor%}
+	</form>
+
+<div class="row">
+<div class="col m4 l4 s12">
+		<form method="POST" action="{% url 'user:search' %} ">
+		            {% csrf_token %}
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
+
+				<h4>Make Booking</h4><br>
+
+				Select Start Date <input type="date" class="datepicker" name='checkIn'>
+				Select End Date <input type="date" class="datepicker" name='checkOut'>
+
+				 <div class="input-field col s12">
+					Reason <input type="text" name='Reason'>
+				    <select name="FoodId">
+				      <option value="1" disabled selected>Choose your Food Preference</option>
+				      <option value="1">Veg</option>
+				      <option value="2">Non Veg</option>
+				    </select>
+				    <label>Food </label>
+			  	</div>
+
+
+		  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+		    <!-- <i class="material-icons right">send</i> -->
+		  </button>
+		        
+		 </form>
+ </div>
+ </div>
+		 <script>
+
+		  $('.datepicker').pickadate({
+		    selectMonths: true, // Creates a dropdown to control month
+		    selectYears: 15, // Creates a dropdown of 15 years to control year
+		    format: 'yyyy-mm-dd',
+		    closeOnSelect: true,
+            closeOnClear: true,
+		  });
+		   $(document).ready(function(){
+		   	    $('select').material_select();
+		  $('.bookings_form').on('click',function(){
+			  	// alert($( this ).find( 'input' ).attr( "value"));
+			  	$(this).find('form:first').submit();
+		  		// alert($(this).find('input');
+		  });
+
+		});
+        </script>
 {% endblock %}
 <!-- {% endif %} -->

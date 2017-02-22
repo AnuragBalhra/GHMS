@@ -14,11 +14,11 @@ class User(bp.Person):
 		roomsList=bg.GHMS.checkRoomsAvailability(checkIn, checkOut)
 		# raise Exception(roomsList)
 
-		if(isinstance(roomsList, list) ):
+		if(isinstance(roomsList, dict) ):
 			# raise Exception(roomsList)
 			return roomsList
 		else:
-			# raise Exception(roomsList)
+			raise Exception(roomsList)
 			# raise Exception("Hey")
 			# cost=rum.cost
 			# raise Exception(rum.Cost)

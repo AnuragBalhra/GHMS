@@ -58,27 +58,27 @@ def search(request):
 
 
 
-	# try:
-	# 	if(request.POST['Reason'] != ""):
-	# 		obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'], FoodId, request.POST['Reason'])
-	# 	else:
-	# 		raise Exception('Not a Waiting List Request')
- # 	except:
-	obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'], FoodId)
+	try:
+		if(request.POST['Reason'] != ""):
+			obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'], FoodId, request.POST['Reason'])
+		else:
+			raise Exception('Not a Waiting List Request')
+ 	except:
+		obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'], FoodId)
 
-	# try:
-	if(isinstance(obj, Booking)):
-		request.session['showBooking']=obj.GNR
-		return redirect('user:showBooking')
-	# raise Exception('Not Entereing')
-	# raise Exception(obj)
-	
-	request.session['showRooms']=obj
-	return redirect('user:showRooms')
-	# except:
-	# 	return redirect('user:showRooms')
+	try:
+		if(isinstance(obj, Booking)):
+			request.session['showBooking']=obj.GNR
+			return redirect('user:showBooking')
+		# raise Exception('Not Entereing')
+		# raise Exception(obj)
+		
+		request.session['showRooms']=obj
+		return redirect('user:showRooms')
+	except:
+		return redirect('user:showRooms')
 
-	# return HttpResponse(available_rooms)
+	return HttpResponse(available_rooms)
 
 def showBooking(request):
 	# raise Exception(request.session['visitor']['Id'])
@@ -91,7 +91,7 @@ def showBooking(request):
 	try:
 		if(request.session['showBooking']):
 			booking=DBMS.getBookings('user', None, None, request.session['showBooking'])	# fetch corresponding booking
-			del request.session['showBooking']
+			# del request.session['showBooking']											## Uncomment this to redirect to dashboard on every refresh
 
 			if(booking.UserId.Id==request.session['visitor']['Id']):						
 				return render(request, 'user/showBookings.html',{'booking':booking})		# authenticated to view booking details
@@ -107,7 +107,7 @@ def showRooms(request):
 	try:
 		if(request.session['showRooms']):
 			roomsList=request.session['showRooms']
-			del request.session['showRooms']
+			#del request.session['showRooms']												## Uncomment this to redirect to dashboard on every refresh
 			return render(request, 'user/showRooms.html',{'roomsList':roomsList})
 	except:
 		return redirect('user:dashboard')

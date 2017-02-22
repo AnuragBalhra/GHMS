@@ -82,7 +82,6 @@ class guestHouse:
 					noConflict[var.RoomId.Id]=False
 		# raise Exception(roomsList)
 
-		# raise Exception(roomsList)									#raise exception to print roomList
 
 		for x in noConflict:
 			if(noConflict[x]):
