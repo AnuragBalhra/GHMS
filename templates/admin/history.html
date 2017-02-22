@@ -1,0 +1,12 @@
+{% extends "user/profile.html" %}
+<!-- {% if 'visitor' in request.session %} -->
+
+{% block content %}
+{% block history %}
+	history
+    {{visitor.Id}}
+    {{visitor.Name}}
+
+{% endblock %}
+{% endblock %}
+<!-- {% endif %} -->

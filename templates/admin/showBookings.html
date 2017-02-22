@@ -1,0 +1,70 @@
+{% extends "user/profile.html" %}
+<!-- {% if 'visitor' in request.session %} -->
+
+{% block content %}
+
+		<table >
+	    <caption> Booking </caption>
+	    	<tr>
+				<td>GNR</td>
+				<td>UserId</td>
+				<td>RoomId</td>
+				<td>FoodId</td>
+				<td>StartTime</td>
+				<td>EndTime</td>
+				<td>AmountReq</td>
+				<td>AmountPaid</td>
+				<td>Status</td>
+				<td>Reason</td>
+				<td>BookingTime</td>
+				<td> Options </td>
+			</tr>
+
+			<tr class='bookings_form'>
+				<form method="POST" action="{% url 'administrator:showBooking' %}" class="bookings_form">
+	            {% csrf_token %}
+					<input type='hidden' name="showBooking" value="{{booking.GNR}}">
+				</form>
+				<td>{{booking.GNR}}</td>
+				<td>{{booking.UserId}}</td>
+				<td>{{booking.RoomId}}</td>
+				<td>{{booking.FoodId}}</td>
+				<td>{{booking.StartTime}}</td>
+				<td>{{booking.EndTime}}</td>
+				<td>{{booking.AmountReq}}</td>
+				<td>{{booking.AmountPaid}}</td>
+				<td>{{booking.getStatus}}</td>
+				<td>{{booking.Reason}}</td>
+				<td>{{booking.BookingTime}}</td>
+				<td>
+					
+					{% if booking.getStatus == 'WL' %}
+					{# if booking.getStatus == 'CNF' or booking.getStatus == 'WL' #}
+						<form action="{% url 'administrator:cancel' %}" method="POST">
+			            {% csrf_token %}
+
+						<input type="hidden" name="GNR" value="{{ booking.GNR }}">
+						<input type="submit" value="CANCEL BOOKING">
+						</form>
+
+						{% if booking.getStatus == 'WL' %}
+							<form action="{% url 'administrator:confirm' %}" method="POST">
+			        	    {% csrf_token %}
+
+							<input type="hidden" name="GNR" value="{{ booking.GNR }}">
+							<input type="submit" value="APPROVE BOOKING">
+							</form>
+						{% endif %}
+					
+					{% endif %}
+
+
+				</td>
+			</tr>
+		</table>
+
+
+		
+	<br>
+{% endblock %}
+<!-- {% endif %} -->

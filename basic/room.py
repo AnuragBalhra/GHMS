@@ -10,7 +10,7 @@ class Room(models.Model):
 	Cost = models.CharField(max_length=40)
 	TYPE_CHOICES=(
 		(1, "Unreserved"),
-		(2, "reserved"),
+		(2, "Reserved"),
 		(3, "Not Available")
 		)
 	type =models.IntegerField(choices=TYPE_CHOICES, default=1)
@@ -25,11 +25,10 @@ class Room(models.Model):
 	# 	self.cost=cost
 	# 	self.status='Available'
 
-	def checkStatus(self):
-		return self.status
+	def gettype(self):
+		TYPE_CHOICES=['NIL',"Unreserved","Reserved","Not Available"]
+		return TYPE_CHOICES[self.type]
 
-	def changeStatus(self):
-		if(self.status=='Available'):
-			self.status='Not Available'
-		else:
-			self.status=='Available'	
+	def settype(self, type):
+		TYPE_CHOICES={"Unreserved":1,"Reserved":2,"Not Available":3}
+		self.type=TYPE_CHOICES[type]

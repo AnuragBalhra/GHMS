@@ -17,43 +17,115 @@ from basic.dataBase import *
 # Create your views here.
 
 
-def dashboard(request):
-	if request.session['visitor']['type']=='admin':
-		visitor=get_object_or_404(Administrator, Id=request.session['visitor']['id'])
+def dashboard(request):						# view to show User Profile
+	try:									# checking if any error occurs in session
+		if(request.session['err']!=""):
+			err=request.session['err']		# if error exists then capture and delete the error
+			del request.session['err']
+		else:
+			raise Exception("No Error")
+	except:
+		err=""								# remove any preceding errors
+
+	if request.session['visitor']['type']=='admin':				
+		visitor=get_object_or_404(Administrator, Id=request.session['visitor']['Id'])
 		try:
 			all_bookings=DBMS.getBookings('admin')
 		except:
 			all_bookings=None
 
 	else:
-		visitor=get_object_or_404(User, Id=request.session['visitor']['id'])
+		visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
 		try:
 			all_bookings=DBMS.getBookings('user', visitor)
 		except:
 			all_bookings=None
 
-	return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings})
+	return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'err':err})
     # return HttpResponse("User Hello world")
 
 
 
 def search(request):
-	visitor=get_object_or_404(User, Id=request.session['visitor']['id'])
-	obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'])
+	visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
 	try:
-		if(isinstance(obj, Booking)):
-			return redirect('showBooking')
-			
-		return showRooms(obj)
+		if(request.POST['FoodId']):
+			FoodId=request.POST['FoodId']
+		else:
+			FoodId=1
 	except:
-		return showRooms(obj)
+			FoodId=1
+
+
+
+	# try:
+	# 	if(request.POST['Reason'] != ""):
+	# 		obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'], FoodId, request.POST['Reason'])
+	# 	else:
+	# 		raise Exception('Not a Waiting List Request')
+ # 	except:
+	obj=visitor.searchRoom(request.POST['checkIn'], request.POST['checkOut'], FoodId)
+
+	# try:
+	if(isinstance(obj, Booking)):
+		request.session['showBooking']=obj.GNR
+		return redirect('user:showBooking')
+	# raise Exception('Not Entereing')
+	# raise Exception(obj)
+	
+	request.session['showRooms']=obj
+	return redirect('user:showRooms')
+	# except:
+	# 	return redirect('user:showRooms')
 
 	# return HttpResponse(available_rooms)
 
-def showBooking(booking):
-	raise Exception(booking)
+def showBooking(request):
+	# raise Exception(request.session['visitor']['Id'])
+	try:																	
+		if(request.POST['showBooking']):										# Check if the user wants to see his booking details
+			request.session['showBooking']=request.POST['showBooking']
+	except:
+		pass
+
+	try:
+		if(request.session['showBooking']):
+			booking=DBMS.getBookings('user', None, None, request.session['showBooking'])	# fetch corresponding booking
+			del request.session['showBooking']
+
+			if(booking.UserId.Id==request.session['visitor']['Id']):						
+				return render(request, 'user/showBookings.html',{'booking':booking})		# authenticated to view booking details
+			else:
+				raise Exception('User not authenticated to view booking')					# Not authenticated to view booking details
+	except:
+		request.session['err']='User not authenticated to view booking'
+		return redirect('user:dashboard')
+		
 
 
-def showRooms(available_rooms):
-	raise Exception(available_rooms)
+def showRooms(request):
+	try:
+		if(request.session['showRooms']):
+			roomsList=request.session['showRooms']
+			del request.session['showRooms']
+			return render(request, 'user/showRooms.html',{'roomsList':roomsList})
+	except:
+		return redirect('user:dashboard')
+		raise Exception(roomsList)
 
+def cancel(request):
+	# raise Exception(request.POST['GNR'])
+	try:
+		if(request.POST['GNR']):
+			booking=DBMS.getBookings('user', None, None, request.POST['GNR'])	# fetch corresponding booking
+
+	except:
+		request.session['err']='INVALID BOOKING GNR'
+		return redirect('user:dashboard')
+
+	# try:
+	visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
+	visitor.cancelBooking(booking)
+	return redirect('user:dashboard')
+	# except:
+		# return redirect('user:dashboard')

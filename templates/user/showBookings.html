@@ -1,0 +1,22 @@
+{% extends "user/profile.html" %}
+<!-- {% if 'visitor' in request.session %} -->
+
+{% block content %}
+
+		<span style='margin:10px;'>{{booking.GNR}}</span>
+		<span style='margin:10px;'>{{booking.UserId}}</span>
+		<span style='margin:10px;'>{{booking.RoomId}}</span>
+		{% if booking.getStatus == 'CNF' or booking.getStatus == 'WL' %}
+			<form action="{% url 'user:cancel' %}" method="POST">
+            {% csrf_token %}
+
+			<input type="hidden" name="GNR" value="{{ booking.GNR }}">
+			<input type="submit" value="CANCEL TICKET">
+			</form>
+		{% else %}
+			<span style='margin:10px;'>{{booking.getStatus}}</span>
+		
+		{% endif %}
+	<br>
+{% endblock %}
+<!-- {% endif %} -->

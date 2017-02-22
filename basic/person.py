@@ -22,6 +22,15 @@ class Person(models.Model):
 		import basic.dataBase as DB
 		return(DB.DBMS.check(username,password, type))
 
+	def cancelBooking(self, buking):
+		import basic.guestHouse as bg
+		try:
+			if(buking.UserId.Id != self.Id and self.type != 'admin'):
+				raise Exception(' User Not Authenticateed to Cancel The Ticket ')
+		except:
+			request.session['err']=' User Not Authenticateed to Cancel The Ticket '
+			return 'FAIL'
+		return(bg.GHMS.makeCancellation(buking.GNR)) 
 
 		# return(check(email, password)) 
 

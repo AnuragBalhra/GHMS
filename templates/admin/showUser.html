@@ -1,0 +1,39 @@
+{% extends "user/profile.html" %}
+<!-- {% if 'visitor' in request.session %} -->
+
+{% block content %}
+
+		<table >
+	    	<caption>Users Lists</caption>
+	    	<tr>
+				<td>Id</td>
+				<td>Name</td>
+				<td>Password</td>
+				<td>Email</td>
+				<td>Type</td>
+				<td> Options</td>
+			</tr>
+
+			<tr class='bookings_form'>
+				<td>{{user.Id}}</td>
+				<td>{{user.Name}}</td>
+				<td>{{user.Password}}</td>
+				<td>{{user.Email}}</td>
+				<td>{{user.type}}</td>
+				<td>
+					<form action="{% url 'administrator:delUser' %}" method="POST">
+		            {% csrf_token %}
+
+					<input type="hidden" name="UserId" value="{{ user.Id }}">
+					<input type="submit" value=" Delete User ">
+					</form>
+
+
+				</td>
+			</tr>
+		</table>
+		<br><br><hr>
+
+	<br>
+{% endblock %}
+<!-- {% endif %} -->

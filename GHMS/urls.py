@@ -22,8 +22,8 @@ from GHMS.views import *
 urlpatterns = [
     url(r'^Admin/', admin.site.urls),
     url(r'^hello/$', hello),
-    url(r'^admin/',include('basic.administrator.urls'),name='admin'),
-    url(r'^user/',include('basic.user.urls'),name='user'),
+    url(r'^admin/',include('basic.administrator.urls',namespace='administrator'),name='administrator'),
+    url(r'^user/',include('basic.user.urls',namespace='user'),name='user'),
     url(r'^$',home),
     url(r'^login/$',login , name='login'),
     url(r'^logout/$',logout , name='logout'),

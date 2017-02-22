@@ -36,7 +36,7 @@ def validate(request):
 def profile(request):
 			
 	if(request.session['visitor']['type']=='admin'):
-		admin=get_object_or_404(Administrator, Id=request.session['visitor']['id'])
+		admin=get_object_or_404(Administrator, Id=request.session['visitor']['Id'])
 		return render(request, 'admin/', {'admin':admin} )
 	elif(request.session['visitor']['type']=='user'):
 		return render(request, 'user/' )
@@ -79,7 +79,7 @@ def login(request):
 		if type=='admin':
 			admin=get_object_or_404(Administrator, Name=username,Password=password)
 			request.session['visitor']={}
-			request.session['visitor']['id']=admin.Id
+			request.session['visitor']['Id']=admin.Id
 			request.session['visitor']['type']='admin'
 			request.session['logged_in']=True
 			request.session['err']=""
@@ -90,7 +90,7 @@ def login(request):
 		else:
 			user=get_object_or_404(User, Name=username,Password=password)
 			request.session['visitor']={}
-			request.session['visitor']['id']=user.Id
+			request.session['visitor']['Id']=user.Id
 			request.session['visitor']['type']='user'
 			request.session['logged_in']=True
 			request.session['err']=""

@@ -1,0 +1,12 @@
+{% extends "user/profile.html" %}
+<!-- {% if 'visitor' in request.session %} -->
+
+{% block content %}
+{% for x in roomsList%}
+	{%for y in x %}
+		<span style='margin:10px;'>{{y}}</span>
+	{%endfor%}
+	<br>
+{%endfor%}
+{% endblock %}
+<!-- {% endif %} -->

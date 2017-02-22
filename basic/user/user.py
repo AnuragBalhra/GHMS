@@ -3,36 +3,49 @@ import basic.person as bp
 # import basic.guestHouse as bg
 class User(bp.Person):
 
-	def cancelBooking(self, buking):
-		return(makeCancellation(buking.GNR)) 
-
-	def searchRoom(self, checkIn, checkOut):
+	
+	def searchRoom(self, checkIn, checkOut, FoodId, Reason=""):
 		import basic.guestHouse as bg
+		if(Reason!=""):
+			room=bg.GHMS.rooms[0]
+			buking=self.requestBooking(room, checkIn, checkOut , FoodId, Reason)
+			return buking
+
 		roomsList=bg.GHMS.checkRoomsAvailability(checkIn, checkOut)
-		# return HttpResponse(rum[0].Cost)
+		# raise Exception(roomsList)
 
-		try:
-			if(len(roomsList)>1):
-				return roomsList
-
-		except:
+		if(isinstance(roomsList, list) ):
+			# raise Exception(roomsList)
+			return roomsList
+		else:
+			# raise Exception(roomsList)
+			# raise Exception("Hey")
 			# cost=rum.cost
 			# raise Exception(rum.Cost)
-
-			buking=bg.GHMS.bookRoom(self, roomsList, checkIn, checkOut)
+			buking=self.requestBooking(roomsList, checkIn, checkOut, FoodId)
+			# raise Exception(buking)
 			return buking
 
 
 	def getProfileInfo(self):
-		return self.name
-	def requestBooking(self, rum, checkIn, checkOut):
-		buking=GHMS.bookRoom(self, rum, checkIn, checkOut)
-		buking.status="WL"
-		DBMS.store(buking)
+		return self
+	def requestBooking(self, rum, checkIn, checkOut, FoodId, Reason=""):
+		import basic.guestHouse as bg
+		import basic.dataBase as bd
+		booking=bg.GHMS.bookRoom(self, rum, checkIn, checkOut, FoodId)
+		if(Reason==""):
+			booking.setStatus('CNF')
+		else:
+			booking.setStatus("WL")
+			booking.Reason=Reason
+
+		bd.DBMS.store(booking)
+		return booking
 	def makePayment(self, buking):
 		import basic.guestHouse as bg
-		return bg.GHMS.makePayment(self, buking)
+		return bg.GHMS.makePayment(self, buking.GNR)
 
 	def requestRefund(self, buking):
-		return None
+		import basic.guestHouse as bg
+		return bg.GHMS.makeRefund(self, buking.GNR)
 

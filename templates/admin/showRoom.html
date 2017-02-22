@@ -1,0 +1,38 @@
+{% extends "user/profile.html" %}
+<!-- {% if 'visitor' in request.session %} -->
+
+{% block content %}
+
+
+		<table >
+	    	<caption>Rooms Details</caption>
+	    	<tr>
+				<td>Id</td>
+				<td>Cost</td>
+				<td>Type</td>
+				<td> Options </td>
+			</tr>
+
+			<tr class='bookings_form'>
+				<td>{{room.Id}}</td>
+				<td>{{room.Cost}}</td>
+				<td>{{room.gettype}}</td>
+				<td>
+					<form action="{% url 'administrator:delRoom' %}" method="POST">
+		            {% csrf_token %}
+
+					<input type="hidden" name="RoomId" value="{{ room.Id }}">
+					<input type="submit" value=" Delete Room ">
+					</form>
+
+
+				</td>
+		
+			</tr>
+		</table>
+		<br><br><hr>
+
+
+	<br>
+{% endblock %}
+<!-- {% endif %} -->

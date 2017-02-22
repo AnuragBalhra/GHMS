@@ -22,6 +22,8 @@ class Booking(models.Model):
 		(2, "WL"),
 		(3, "CANCEL"),
 		(4, "REJECTED"),
+		(5, "CHECKED IN"),
+		(6, "CHECKED OUT"),
 		(0, "NIL")
 		)
 	Status =models.IntegerField(choices=STATUS_CHOICES, default=1) 
@@ -40,9 +42,8 @@ class Booking(models.Model):
 	# 	self.Status=Status
 	# 	self.Reason=Reason
 
-
 	def __str__(self):
-		return u'%s %s %s' %(str(self.GNR),str(self.UserId), str(self.RoomId)) 
+		return u'%s %s %s %s' %(str(self.GNR),str(self.UserId), str(self.RoomId), self.getStatus() )
 
 	class Meta:
 		ordering = ['GNR']
@@ -51,3 +52,19 @@ class Booking(models.Model):
 		if(self.EndTime<StartTime or self.StartTime>EndTime):
 			return False
 		return True
+
+	def refund(self):
+		if(self.getStatus()=='WL' or self.getStatus()=='CNF'):
+			self.AmountPaid=0
+			self.save()
+			return 'Success'
+		else:
+			return 'Cannot Refund'
+
+	def getStatus(self):
+		STATUS_CHOICES=["NIL", "CNF","WL","CANCEL", "REJECTED", "CHECKED IN", "CHECKED IN", "UNDEFINED"]
+		return STATUS_CHOICES[self.Status]
+
+	def setStatus(self, Status):
+		STATUS_CHOICES={"NIL":0, "CNF":1,"WL":2,"CANCEL":3, "REJECTED":4,"CHECKED IN":5, "CHECKED IN":6, "UNDEFINED":7}
+		self.Status=STATUS_CHOICES[Status]

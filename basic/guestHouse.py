@@ -2,7 +2,8 @@ from django.http import HttpResponseRedirect,HttpResponse
 import basic.room as br
 import basic.booking as bb
 import basic.dataBase as bd
-from datetime import datetime
+import datetime
+from django.contrib.sessions.backends.db import SessionStore
 
 
 class guestHouse:
@@ -10,15 +11,15 @@ class guestHouse:
 	def __init__(self):
 		self.bookings=bd.DBMS.getBookings('user')
 		# return None
-		self.rooms=bd.DBMS.getRooms()
+		self.rooms=bd.DBMS.getRooms('user')
 		# raise Exception(self.bookings)
 
 
 	# def checkUser(self, email, pass):
-	def bookRoom(self, usr, flat, checkIn, checkOut, reason=""):
+	def bookRoom(self, usr, flat, checkIn, checkOut, FoodId, reason=""):
 		# raise Exception(usr)
 		import basic.food as bf
-		food=bf.Food.objects.get(Id=1)
+		food=bf.Food.objects.get(Id=FoodId)
 
 		new_booking=bb.Booking.objects.create(UserId=usr,RoomId=flat, FoodId=food, StartTime=checkIn, EndTime=checkOut, AmountReq=flat.Cost, Status=0)
 		status=self.makePayment(new_booking.GNR)
@@ -30,6 +31,8 @@ class guestHouse:
 			if(deleted!='Success'):
 				raise Exception("Unable to Delete booking")
 			raise Exception("Payment Failed...")
+		else:
+			new_booking.AmountPaid=flat.Cost
 		# new_booking.save()
 		return new_booking
 	def freeRoom(self, buking, usr, checkOutTime):
@@ -37,9 +40,14 @@ class guestHouse:
 	def checkRoomsAvailability(self, checkIn, checkOut):
 		# raise Exception(self.rooms)
 
-		checkIn=datetime.strptime(checkIn, "%Y-%m-%d")
-		checkOut=datetime.strptime(checkOut, "%Y-%m-%d")
-		delta=checkOut-checkIn
+		checkIn=datetime.datetime.strptime(checkIn, "%Y-%m-%d").date()
+		checkOut=datetime.datetime.strptime(checkOut, "%Y-%m-%d").date()
+		
+		delta=(checkOut-checkIn+ datetime.timedelta(days=1)).days
+		# raise Exception(delta)
+
+		if(delta<=0):
+			raise Exception(str(delta)+" cannot be negative. Invalid Dates selected")
 		# return HttpResponse(self.bookings[0].UserId.Id)
 
 		# roomsList={}
@@ -49,59 +57,78 @@ class guestHouse:
 		# 	for x in range(delta.days):
 		# 		temp.update({x:True})
 		# 	roomsList.update({r.Id: temp})
-		roomsList=[[True for x in range(delta.days)] for y in range(len(self.rooms))]
+		roomsList={y.Id:{(checkIn+datetime.timedelta(x)).day:True for x in range(delta)} for y in self.rooms}
 		# buking=bb.Booking(checkIn, checkOut)
 		allBookings=self.bookings
 		noConflict={}
-		for x in self.rooms:
-			noConflict[x.Id-1]=True
+		for y in self.rooms:
+			noConflict[y.Id]=True
+
 			
-		# raise Exception(buking)
-		# temp=""
-
+		test={}
 		for var in allBookings:
-			# temp+=str(var.Status)
-			if(var.Status==1):
-				# for x in range((var.StartTime-checkIn).days,(var.endTime-checkIn).days):
-				begin_loop=(var.StartTime-checkIn.date()).days
-				if(begin_loop<0):
-					begin_loop=0
-				if(begin_loop>delta.days):
-					begin_loop=delta.days
-				end_loop=(var.EndTime-checkIn.date()).days
-				if(end_loop<0):
-					end_loop=0
-				if(end_loop>delta.days):
-					end_loop=delta.days
+			if(var.Status==1 and var.RoomId.type==1):
 
-				# raise Exception(end_loop)
-				# temp+=str(diff)
-				for x in range(begin_loop, end_loop ):
-					roomsList[var.RoomId.Id-1][x]=False
-				if(var.conflicting(checkIn.date(), checkOut.date())):
-					noConflict[var.RoomId.Id-1]=False
-		# raise Exception(noConflict)									#raise exception to print roomList
+				for x in range(delta):
+					temp_date=checkIn+datetime.timedelta(x)
+					# roomsList[var.RoomId.Id][temp_date.day]=False
+					# raise Exception(roomsList)
+					if(temp_date>=var.StartTime and temp_date<=var.EndTime):
+						test[temp_date.day]=var.RoomId.Id
+						roomsList[var.RoomId.Id][temp_date.day]=False
 
-		cost=0
+
+				if(var.conflicting(checkIn, checkOut)):
+					noConflict[var.RoomId.Id]=False
+		# raise Exception(roomsList)
+
+		# raise Exception(roomsList)									#raise exception to print roomList
+
 		for x in noConflict:
 			if(noConflict[x]):
 				# raise Exception(x)									#raise exception to print roomList
 
-				rum=bd.DBMS.getRooms(x+1)
+				rum=bd.DBMS.getRooms('user',x)
 				return rum
 				
 
 		return roomsList
 	def checkBookingStatus(self, GNR):
-		pass
+		booking=bd.DBMS.getBookings('user', None, None, GNR)
+		return booking.getStatus()
 	def makePayment(self, GNR):
 		booking=bd.DBMS.getBookings('user', None, None, GNR)
-		booking[0].AmountPaid=booking[0].AmountReq
+		if(booking.getStatus()=='WL'):
+			return 'Payment Already Done'
+		else:
+			booking.AmountPaid=booking.AmountReq
 		return "Success"
 	def makeRefund(self, GNR):
-		pass
+		# import pdb
+		# pdb.set_trace()
+		booking=bd.DBMS.getBookings('user', None, None, GNR)
+		Status=booking.refund()
+		if(Status=='Success'):
+			booking.AmountPaid=0
+			booking.save()
+			return 'Success'
+		else:
+			return Status
+
+
+
+
 	def makeCancellation(self, GNR):
-		pass
+		self.makeRefund(GNR)
+
+		booking=bd.DBMS.getBookings('user', None, None, GNR)
+		if(booking.getStatus()=='WL' or booking.getStatus()=='CNF'):
+			booking.setStatus('CANCEL')
+			booking.save()
+			return 'Success'
+		elif(booking.getStatus()=='CANCEL'):
+			return 'Already Cancelled'
+		return 'Cannot Cancel'
 
 
 GHMS=guestHouse()
