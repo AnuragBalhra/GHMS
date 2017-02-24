@@ -15,51 +15,14 @@
 	Hey
     {{visitor.Id}}
     {{visitor.Name}}
+
+
+
+
+
     <span class='err'>{{err}}</span>
-    <div class="row">
-    <div class="col m8 l8 s 12">
-    <table >
-    	<caption> Bookings History</caption>
-    	<tr>
-			<td>GNR</td>
-			<td>UserId</td>
-			<td>RoomId</td>
-			<td>FoodId</td>
-			<td>StartTime</td>
-			<td>EndTime</td>
-			<td>AmountReq</td>
-			<td>AmountPaid</td>
-			<td>Status</td>
-			<td>Reason</td>
-			<td>BookingTime</td>
-		</tr>
 
-	{% for buking in all_bookings %}	
-		
-		<tr class='bookings_form'>
-			<form method="POST" action="{% url 'user:showBooking' %}" class="bookings_form">
-            {% csrf_token %}
-				<input type='hidden' name="showBooking" value="{{buking.GNR}}">
-			</form>
-			<td>{{buking.GNR}}</td>
-			<td>{{buking.UserId}}</td>
-			<td>{{buking.RoomId}}</td>
-			<td>{{buking.FoodId}}</td>
-			<td>{{buking.StartTime}}</td>
-			<td>{{buking.EndTime}}</td>
-			<td>{{buking.AmountReq}}</td>
-			<td>{{buking.AmountPaid}}</td>
-			<td>{{buking.getStatus}}</td>
-			<td>{{buking.Reason}}</td>
-			<td>{{buking.BookingTime}}</td>
-		</tr>
-	{% endfor %}
-
-
-	</table>
-	<br><br>
-	</div>
-	<div class="col m4 l4 s12">
+    <div class="col m4 l4 s12">
 		<form method="POST" action="search/">
             {% csrf_token %}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
@@ -105,6 +68,58 @@
         </script>
 
 	</div>
+
+
+
+    <div class="row">
+    <div class="col m8 l8 s 12">
+    <div class="container">
+    <table class="striped">
+    	<!-- <caption> Bookings History</caption> -->
+    	<thead>
+    	<tr>
+			<td>GNR</td>
+			<td>UserId</td>
+			<td>RoomId</td>
+			<td>FoodId</td>
+			<td>StartTime</td>
+			<td>EndTime</td>
+			<td>AmountReq</td>
+			<td>AmountPaid</td>
+			<td>Status</td>
+			<td>Reason</td>
+			<td>BookingTime</td>
+		</tr>
+		</thead>
+
+	<tbody>	
+	{% for buking in all_bookings %}	
+		
+		<tr class='bookings_form'>
+			<form method="POST" action="{% url 'user:showBooking' %}" class="bookings_form">
+            {% csrf_token %}
+				<input type='hidden' name="showBooking" value="{{buking.GNR}}">
+			</form>
+			<td>{{buking.GNR}}</td>
+			<td>{{buking.UserId}}</td>
+			<td>{{buking.RoomId}}</td>
+			<td>{{buking.FoodId}}</td>
+			<td>{{buking.StartTime}}</td>
+			<td>{{buking.EndTime}}</td>
+			<td>{{buking.AmountReq}}</td>
+			<td>{{buking.AmountPaid}}</td>
+			<td>{{buking.getStatus}}</td>
+			<td>{{buking.Reason}}</td>
+			<td>{{buking.BookingTime}}</td>
+		</tr>
+	{% endfor %}
+
+	</tbody>
+	</table>
+	</div>
+	<br><br>
+	</div>
+	
 	</div>
 {% endblock %}
 
