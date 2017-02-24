@@ -65,7 +65,7 @@ class guestHouse:
 			noConflict[y.Id]=True
 
 			
-		test={}
+		# test={}
 		for var in allBookings:
 			if(var.Status==1 and var.RoomId.type==1):
 
@@ -74,13 +74,14 @@ class guestHouse:
 					# roomsList[var.RoomId.Id][temp_date.day]=False
 					# raise Exception(roomsList)
 					if(temp_date>=var.StartTime and temp_date<=var.EndTime):
-						test[temp_date.day]=var.RoomId.Id
+						# test[temp_date.day]=var.RoomId.Id
 						roomsList[var.RoomId.Id][temp_date.day]=False
 
 
 				if(var.conflicting(checkIn, checkOut)):
 					noConflict[var.RoomId.Id]=False
-		# raise Exception(roomsList)
+		# for x in roomsList:
+			# raise Exception(noConflict[x])
 
 
 		for x in noConflict:

@@ -109,6 +109,7 @@ def logout(request):
 	request.session['logged_in']=False
 	try:
 		del request.session['visitor']
+		request.session.flush()
 		request.session['err']="Successfully logged out"
 
 	except:

@@ -18,7 +18,7 @@ class User(bp.Person):
 			# raise Exception(roomsList)
 			return roomsList
 		else:
-			raise Exception(roomsList)
+			# raise Exception(roomsList)
 			# raise Exception("Hey")
 			# cost=rum.cost
 			# raise Exception(rum.Cost)

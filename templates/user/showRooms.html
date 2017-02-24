@@ -6,16 +6,17 @@
 <hr>
 	<form action="{% url 'user:search' %} " method="POST">
 	{% csrf_token %}
-{% for roomNo, dates in roomsList.items%}
+{% for roomNo, dates in roomsList.items|dictsort:0%}
     <div class="row">
     <div class="col">
 	<span style="margin:20px;">RoomNo{{roomNo}}</span>
 	</div>
-	{%for date,availability in dates.items %}
+	{%for date,availability in dates.items|dictsort:0 %}
 
-		<div class="col">
-    		<input type="checkbox" name="{{roomNo}}" id="{{roomNo}}_{{date}}" />
-     	 	<label for="{{roomNo}}_{{date}}">{{availability}}</label>
+		<div class="col date " roomNo="{{roomNo}}" date="{{date}}" >
+			<!-- {{date}} {{availability}} -->
+    		<input type="checkbox"  name="{{roomNo}}" id="{{roomNo}}_{{date}}" />
+     	 	<label for="{{roomNo}}_{{date}}">{{date}} {{availability}}</label>
      	 </div>
 	{%endfor%}
 
@@ -72,6 +73,17 @@
 		  });
 
 		});
+
+		   $('.date').on('click',function(){
+		   		alert($(this).attr('date'));
+		   });
         </script>
+
+        <style>
+        .date{
+        	border:0.5px solid black;
+        }
+        .date
+        </style>
 {% endblock %}
 <!-- {% endif %} -->
