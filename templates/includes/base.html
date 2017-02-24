@@ -4,11 +4,20 @@
 
 <head>
     <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'basic/css/materialize.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'basic/css/style.css' %}" />
+<script type="text/javascript" src="{% static 'basic/js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'basic/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'basic/js/script.js' %}"></script>
+
 </head>
-<body>
+<body >
+<!-- <img src="{% static 'basic/images/back.jpg' %}" /> -->
+
     {% block menu %}
     {% include "includes/menu.html" %}
     {% endblock %}
@@ -21,5 +30,7 @@
     	<p>Thanks for visiting my site.</p>
 	</div>
     {% endblock %}
+
+
 </body>
 </html>

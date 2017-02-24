@@ -4,39 +4,44 @@
 {% block content %}
 {#roomsList#}
 <hr>
-	<!-- <form action="{% url 'user:search' %} " method="POST"> -->
-	<!-- {% csrf_token %} -->
+
 
 	<table class="striped">
 	<thead>
-        <!-- '/'  <tr> -->
-              <!-- <th data-field="id">Name</th> -->
-              <!-- <th data-field="name">Item Name</th> -->
-              <!-- <th data-field="price">Item Price</th> -->
-          <!-- </tr> -->
+        <tr>
+        <th > Room Number</th>
+	    {% with roomsList.values|first as data %}
+			{%for date,availability in data.items %}
+	    
+	              <th data-field="id">{{date}}</th>
+			{%endfor%}
+		{% endwith %}
+          </tr>
     </thead>
 
 
     <tbody>
-    	{% for roomNo, dates in roomsList.items|dictsort:0%}
+    {% for roomNo, dates in roomsList.items|dictsort:0%}
    <!--  <div class="row">
     <div class="col"> -->
     	<tr>	
-	<td><span style="margin:20px;">RoomNo{{roomNo}}</span></td>
+    		<form action="{% url 'user:search' %} " method="POST">
+			{% csrf_token %}
+			<th><span style="margin:20px;">RoomNo{{roomNo}}</span></th>
 
-		{%for date,availability in dates.items|dictsort:0 %}
+			{%for date,availability in dates.items|dictsort:0 %}
 
 			 <!-- <div class="col date " roomNo="{{roomNo}}" date="{{date}}"> -->
 				<!-- <div> -->
 
 	    		<td><input type="checkbox"  name="{{roomNo}}" id="{{roomNo}}_{{date}}" />
-	     	 	<label for="{{roomNo}}_{{date}}">{{date}} {{availability}}</label>
+	     	 	<label for="{{roomNo}}_{{date}}"> {{availability}}</label>
 	    		</td>
 	     	 <!-- </div> -->
 
 
 	     	 
-		{%endfor%}
+			{%endfor%}
 		</tr>
 	{%endfor%}	
 

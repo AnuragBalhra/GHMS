@@ -57,7 +57,7 @@ class guestHouse:
 		# 	for x in range(delta.days):
 		# 		temp.update({x:True})
 		# 	roomsList.update({r.Id: temp})
-		roomsList={y.Id:{(checkIn+datetime.timedelta(x)).day:True for x in range(delta)} for y in self.rooms}
+		roomsList={y.Id:{str(checkIn+datetime.timedelta(x)):True for x in range(delta)} for y in self.rooms}
 		# buking=bb.Booking(checkIn, checkOut)
 		allBookings=self.bookings
 		noConflict={}
@@ -75,7 +75,7 @@ class guestHouse:
 					# raise Exception(roomsList)
 					if(temp_date>=var.StartTime and temp_date<=var.EndTime):
 						# test[temp_date.day]=var.RoomId.Id
-						roomsList[var.RoomId.Id][temp_date.day]=False
+						roomsList[var.RoomId.Id][str(temp_date)]=False
 
 
 				if(var.conflicting(checkIn, checkOut)):

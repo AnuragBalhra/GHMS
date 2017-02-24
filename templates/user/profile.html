@@ -20,12 +20,11 @@
 
 
 
-    <span class='err'>{{err}}</span>
+    <span class='err'>123{{err}}</span>
 
     <div class="col m4 l4 s12">
 		<form method="POST" action="search/">
             {% csrf_token %}
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
 
 		<h4>Make Booking</h4><br>
 
@@ -47,25 +46,7 @@
   </button>
         
 		 </form>
-		 <script>
-
-		  $('.datepicker').pickadate({
-		    selectMonths: true, // Creates a dropdown to control month
-		    selectYears: 15, // Creates a dropdown of 15 years to control year
-		    format: 'yyyy-mm-dd',
-		    closeOnSelect: true,
-            closeOnClear: true,
-		  });
-		   $(document).ready(function(){
-		   	    $('select').material_select();
-		  $('.bookings_form').on('click',function(){
-			  	// alert($( this ).find( 'input' ).attr( "value"));
-			  	$(this).find('form:first').submit();
-		  		// alert($(this).find('input');
-		  });
-
-		});
-        </script>
+		
 
 	</div>
 
