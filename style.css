@@ -1,0 +1,26 @@
+.nav-wrapper{
+
+	margin-top: 60px;
+	background-color:blue !important;
+}
+.container{
+	
+	border-radius: 10px;
+	border:1px solid grey;
+	position:static !important;
+	top:20px;
+}
+input{
+	position:relative;
+
+	/*width:20% !important;*/
+	display:inline !important;
+
+}
+
+.all{
+	position:relative;
+	top:100px;
+	height:auto !important;
+
+}
