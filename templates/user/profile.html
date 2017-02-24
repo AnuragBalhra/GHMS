@@ -22,12 +22,19 @@
 
     <span class='err'>{{err}}</span>
 
-    <div class="col m4 l4 s12">
+
+    
+    <div class="parallax-container">
+      <div class="parallax"><img src="http://materializecss.com/images/parallax1.jpg"></div>
+    </div>
+        
+
+    <div  id="makeBooking" class="section scrollspy ">
 		<form method="POST" action="search/">
             {% csrf_token %}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
 
-		<h4>Make Booking</h4><br>
+		<!-- <h4>Make Booking</h4><br>
 
 		Select Start Date <input type="date" class="datepicker" name='checkIn'>
 		Select End Date <input type="date" class="datepicker" name='checkOut'>
@@ -40,12 +47,27 @@
 		    </select>
 		    <label>Food </label>
 	  	</div>
+ -->
 
+ 		<div class="all black section " style='position:relative; top:200px;'>
+  <div class="row container">
+  <div class="col m4">
 
-  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <input type="date" class="datepicker">
+  </div>
+  <div class="col m4">
+
+    <input type="date" class="datepicker">
+  </div>
+        <!-- Page Content goes here -->
+  </div>
+
+</div>
+
+ <!--  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
     <!-- <i class="material-icons right">send</i> -->
   </button>
-        
+  -->       
 		 </form>
 		 <script>
 
@@ -63,8 +85,16 @@
 			  	$(this).find('form:first').submit();
 		  		// alert($(this).find('input');
 		  });
+		  $(document).ready(function(){
+    $('.scrollspy').scrollSpy();
+  });
 
 		});
+
+
+		   $(document).ready(function(){
+      $('.parallax').parallax();
+    });
         </script>
 
 	</div>
@@ -73,7 +103,7 @@
 
     <div class="row">
     <div class="col m8 l8 s 12">
-    <div class="container">
+    <div class="container section scrollspy"  id="bookingHistory" style='position: relative;top:200px'>
     <table class="striped">
     	<!-- <caption> Bookings History</caption> -->
     	<thead>
