@@ -1,0 +1,33 @@
+ {% block menu %}
+{% load static %}
+ <nav class="white " role="navigation" style="height:110px;line-height:100px;">
+        <div class="nav-wrapper  valign-wrapper">
+        <ul>
+        <li><img src="{% static 'basic/images/iitjlogo.png' %}" class="logo responsive-img"></li>
+         <li> <a id="logo-container" href="#" class="brand-logo red-text text-darken-4">Guest House Management System</a></li>
+          
+
+        </div>
+    </nav>
+
+<nav class="red darken-4" role="navigation" style="height:35px;line-height:30px;">
+        <div class="nav-wrapper container">
+        <ul class=" hide-on-med-and-down  red darken-4 " style="height:35px;line-height:30px;display:inline-block;" >
+            <li ><a  href="#home">Home</a></li>
+            <li ><a  href="#bookings">Bookings</a></li>
+           <li ><a  href="#gallery">Gallery</a></li>
+           <li ><a  href="#contact">Contact Us</a></li>
+        </ul>
+        <ul class="right  hide-on-med-and-down  red darken-4 " style="height:35px;line-height:30px;display:inline-block;" >
+           <li ><small>Welcome {{ visitor.Name }}</small></li>
+           <li ><a  href="#" onclick="window.location='../logout/'" id='logout'> Logout</a></li>
+        </ul>
+          <ul id="nav-mobile" class="side-nav">
+            <li><a href="#">Navbar Link</a></li>
+          </ul>
+          <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+
+    {% endblock %}

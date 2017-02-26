@@ -2,56 +2,75 @@
 
 {% if 'visitor' in request.session %}
 
-{% block title %}User Profile{% endblock %}
+{% block title %}Admin Profile{% endblock %}
 
 {% block menu %}
-{% include "includes/menu.html" %}
+{% include "admin/menu.html" %}
 {% endblock %}
 
 {% block content %}
-	Hey
-    {{visitor.Id}}
-    {{visitor.Name}}
+	<!-- Hey -->
+    <!-- {{visitor.Id}} -->
+    <!-- {{visitor.Name}} -->
     <style>
     	td{
     		width:200px;
     	}
    	</style>
    	<div class="row">
-   	<div class="col m8 l8 s12">
-   	<div class="row">
-	   	<div class="col m6 l6 s12">
-		    <table >
-		    <caption> Bookings History </caption>
-		    	<tr>
-					<td>GNR</td>
-					<td>UserId</td>
-					<td>RoomId</td>
-					<td>StartTime</td>
-					<td>EndTime</td>
-				</tr>
+	   	<div class="col m12" id="bookings">
+	   		<div class="row">
+	   		<div class="col m12" id="showBooking">
 
-			{% for booking in all_bookings %}	
-				<tr class='bookings_form'>
-					<form method="POST" action="{% url 'administrator:showBooking' %}" class="bookings_form">
-		            {% csrf_token %}
-						<input type='hidden' name="showBooking" value="{{booking.GNR}}">
-					</form>
-					<td>{{booking.GNR}}</td>
-					<td>{{booking.UserId}}</td>
-					<td>{{booking.RoomId}}</td>
-					<td>{{booking.StartTime}}</td>
-					<td>{{booking.EndTime}}</td>
-				</tr>
-			{% endfor %}
-			</table>
-			<br><br><hr>
-		</div>
-		<div class="col m6 l6 col s12">
-			<div class="row">
-				<div class="col m12 l12 s12">
+	   		</div>
+	   		</div>
+		   	<div class="row">
+		   		<div class="col m12">
+					<div class="col m12 l12 s12">
+				    <table class="striped">
+				    <caption><h5> Bookings History </h5></caption>
+				    	<tr>
+							<td>GNR</td>
+							<td>UserId</td>
+							<td>RoomId</td>
+							<td>StartTime</td>
+							<td>EndTime</td>
+						</tr>
+
+					{% for booking in all_bookings %}	
+						<tr class='bookings_form'>
+							<form method="POST" action="{% url 'administrator:showBooking' %}" 	>
+				            {% csrf_token %}
+								<input type='hidden' name="showBooking" value="{{booking.GNR}}">
+							</form>
+							<td>{{booking.GNR}}</td>
+							<td>{{booking.UserId}}</td>
+							<td>{{booking.RoomId}}</td>
+							<td>{{booking.StartTime}}</td>
+							<td>{{booking.EndTime}}</td>
+						</tr>
+					{% endfor %}
+					</table>
+					<br><br><hr>
+					</div>
+				</div>
+				<div class="col m4">
+
+				</div>
+			</div>
+	   	</div>
+
+   	<div class="col m12" id="users">
+   			<div class="row">
+	   		<div class="col m12" id="showUser">
+
+	   		</div>
+	   		</div>
+	   	<div class="row">
+   			<div class="col m8">
+	   			<div class="col m12 l12 s12">
 					<table >
-				    	<caption>Users Lists</caption>
+				    	<caption><h5> Users Lists </h5></caption>
 				    	<tr>
 							<td>Id</td>
 							<td>Name</td>
@@ -61,8 +80,8 @@
 						</tr>
 
 					{% for user in usersList %}	
-						<tr class='bookings_form'>
-							<form method="POST" action="{% url 'administrator:showUser' %}" class="bookings_form">
+						<tr class="users_form">
+							<form method="POST" action="{% url 'administrator:showUser' %}" >
 				            {% csrf_token %}
 								<input type='hidden' name="showUser" value="{{user.Id}}">
 							</form>
@@ -76,10 +95,44 @@
 					</table>
 					<br><br><hr>
 				</div>
-				<div class="col m12 l12 s12">
+			</div>
+			<div class="col m4" >
+				<form method="POST" action="{% url 'administrator:addObj' %}" >
+        	    {% csrf_token %}
+
+		            <h4>Add User</h4><br>
+		            <input type="hidden" name="typeOfObj" value="user">
+					Name <input type="text" name='Name'>
+					Password <input type="text" name='Password'>
+					Email <input type="text" name='Email'>
+					<div class="input-field col s12">
+		            Type:<select name="type"  class="browser-default" >
+
+		            	<option value='admin'>Admin</option>
+		            	<option value='user'>User</option>
+		            	</select>
+		            </div> 
+					<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					    <!-- <i class="material-icons right">send</i> -->
+					</button>
+				</form>
+			</div>
+		</div>		
+
+   	</div>
+   	<div class="col m12" id="rooms">
+			<div class="row">
+	   		<div class="col m12" id="showRoom">
+
+	   		</div>
+	   		</div>
+		<div class="row">
+			<div class="col m8">
+
+   				<div class="col m12 l12 s12">
 
 					<table >
-				    	<caption>Rooms Lists</caption>
+				    	<caption><h5> Rooms Lists <h5></caption>
 				    	<tr>
 							<td>Id</td>
 							<td>Cost</td>
@@ -87,8 +140,8 @@
 						</tr>
 
 					{% for room in roomsList %}	
-						<tr class='bookings_form'>
-							<form method="POST" action="{% url 'administrator:showRoom' %}" class="bookings_form">
+						<tr class="rooms_form">
+							<form method="POST" action="{% url 'administrator:showRoom' %}" >
 				            {% csrf_token %}
 								<input type='hidden' name="showRoom" value="{{room.Id}}">
 							</form>
@@ -101,89 +154,31 @@
 					<br><br><hr>
 				</div>
 			</div>
-</div></div>
+			<div class="col m4" >
+
+				<form method="POST" action="{% url 'administrator:addObj' %}" >
+	            {% csrf_token %}
+
+	            <h4>Add Room</h4><br>
+	            <input type="hidden" name="typeOfObj" value="room">
+				Cost <input type="text" name='Cost'>
+				<div class="input-field col s12">
+	            Type:<select name="type"  class="browser-default" >
+
+	            	<option value='1'>Unreserved</option>
+	            	<option value='2'>Reserved</option>
+	            	<option value='3'>Not Available</option>
+	            	</select>
+	            </div> 
+				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+				    <!-- <i class="material-icons right">send</i> -->
+				</button>
+				</form>
+			</div>
 		</div>
-		<div class="col m4 l4 s12">
-		<div class="row">
-		<div class="col s12 m12 l12">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
-
-			<form method="POST" action="{% url 'administrator:addObj' %}" class="bookings_form">
-            {% csrf_token %}
-
-            <h4>Add User</h4><br>
-            <input type="hidden" name="typeOfObj" value="user">
-		Name <input type="text" name='Name'>
-		Password <input type="text" name='Password'>
-		Email <input type="text" name='Email'>
-			<div class="input-field col s12">
-            Type:<select name="type"  class="browser-default" >
-
-            	<option value='admin'>Admin</option>
-            	<option value='user'>User</option>
-            	</select>
-            </div> 
-
-		 
-
-  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <!-- <i class="material-icons right">send</i> -->
-  </button>
-
-			</form>
-			</div>
-			</div>
-
-
-
-<div class="row">
-		<div class="col s12 m12 l12">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.css" />
-
-			<form method="POST" action="{% url 'administrator:addObj' %}" class="bookings_form">
-            {% csrf_token %}
-
-            <h4>Add Room</h4><br>
-            <input type="hidden" name="typeOfObj" value="room">
-		Cost <input type="text" name='Cost'>
-			<div class="input-field col s12">
-            Type:<select name="type"  class="browser-default" >
-
-            	<option value='1'>Unreserved</option>
-            	<option value='2'>Reserved</option>
-            	<option value='3'>Not Available</option>
-            	</select>
-            </div> 
-
-		 
-
-  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <!-- <i class="material-icons right">send</i> -->
-  </button>
-
-			</form>
-			</div>
-			</div>
-			
-
-
-
-
-		</div>
-		</div>
-
-	<script>
-	$(document).ready(function(){
-		   	    $('select').material_select();
-		  $('.bookings_form').on('click',function(){
-			  	// alert($( this ).find( 'input' ).attr( "value"));
-			  	$(this).find('form:first').submit();
-		  		// alert($(this).find('input');
-		  });
-
-		});
-	</script>
-
+   	</div>
+   	</div>
+   	
 {% endblock %}
 
 

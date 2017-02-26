@@ -69,11 +69,12 @@ def search(request):
 	try:
 		if(isinstance(obj, Booking)):
 			request.session['showBooking']=obj.GNR
-			return redirect('user:showBooking')
+			return redirect('user:dashboard')
 		# raise Exception('Not Entereing')
 		# raise Exception(obj)
 		
 		request.session['showRooms']=obj
+		request.session['request']=request.POST;
 		return redirect('user:showRooms')
 	except:
 		return redirect('user:showRooms')
@@ -107,8 +108,9 @@ def showRooms(request):
 	try:
 		if(request.session['showRooms']):
 			roomsList=request.session['showRooms']
+			postedData=request.session['request']
 			#del request.session['showRooms']												## Uncomment this to redirect to dashboard on every refresh
-			return render(request, 'user/showRooms.html',{'roomsList':roomsList})
+			return render(request, 'user/showRooms.html',{'roomsList':roomsList,'postedData':postedData})
 	except:
 		return redirect('user:dashboard')
 		raise Exception(roomsList)

@@ -8,54 +8,91 @@
 {% block title %}User Profile{% endblock %}
 
 {% block menu %}
-{% include "includes/menu.html" %}
+{% include "user/menu.html" %}
 {% endblock %}
 
 {% block content %}
-	Hey
+	<!-- Hey
     {{visitor.Id}}
     {{visitor.Name}}
+ -->
 
+{% load static %}
+<!-- <img src="{% static 'basic/images/back.jpg' %} "> -->
+    <div class="parallax-container hide-on-small-only scrollspy" id="home">
+      <div class="parallax"><img src="{% static 'basic/images/background/newhostels.png' %} "></div>
+    </div>
+        
 
+<div class="section black white-text text-lighten-2 scrollspy" id="login">
 
+    <div class="container " style="border-radius:20px;">
+    <div class="row valign-wrapper">
+        <div class="col l6 m6 s12  ">
+        <big>Features in IITJ Guesthouse</big>
+        </div>
+        <div class="col l6 m6 s12">
+            <div class="row">
+                <div class="col m3 center">
+                     <i class=" small material-icons">wifi</i><br>Free Wifi
+                </div>
+                                <div class="col m3 center">
+                     <i class=" small material-icons">tv</i><br>TV
+                </div>  
+                <div class="col m3 center">
+                     <i class=" small material-icons">local_dining</i><br>Food
+                </div>
+                <div class="col m3 center">
+                     <i class=" small material-icons">local_hospital</i><br>Health Center
+                </div>
 
-
-    <span class='err'>123{{err}}</span>
-
-    <div class="col m4 l4 s12">
-		<form method="POST" action="search/">
+            </div>
+        </div>
+    </div>
+<div class="row white red-text text-darken-4 " >
+        <span style="color:red;">{{err}}</span>
+			<form action="{% url 'user:search' %}" method="POST">
             {% csrf_token %}
 
-		<h4>Make Booking</h4><br>
+            <div class="input-field col l3 m3 s12">
+                <i class="material-icons prefix">account_circle</i>
+                <input type="date" class="datepicker" name='checkIn'>
+                <label for="checkIn">Select Start Date </label>
+            </div>
+            <div class="input-field col l3 m3 s12">
+                <i class="material-icons prefix">security</i>
+                <input type="date" class="datepicker" name='checkOut'>
+                <label for="checkOut">Select End Date </label>
+            </div>
+            <div class="input-field col l4 m4 s12">
+                <i class="material-icons prefix">verified_user</i>
+                <select name="FoodId">
+			      <option value="1" disabled selected>Choose your Food Preference</option>
+			      <option value="1">Veg</option>
+			      <option value="2">Non Veg</option>
+			    </select>
+			    <label>Food </label>
 
-		Select Start Date <input type="date" class="datepicker" name='checkIn'>
-		Select End Date <input type="date" class="datepicker" name='checkOut'>
+            </div>
+            <div class="input-field col l2 m2 s12">
+                    <button class="btn waves-effect waves-light red darken-4 valign-wrapper" type="submit" name="action">
+                    <i class="material-icons">send</i>Search
+                    </button>
+            </div>
+            </form>
+    </div>
+    </div>
+  </div>
+</div>
 
-		 <div class="input-field col s12">
-		    <select name="FoodId">
-		      <option value="1" disabled selected>Choose your Food Preference</option>
-		      <option value="1">Veg</option>
-		      <option value="2">Non Veg</option>
-		    </select>
-		    <label>Food </label>
-	  	</div>
+<div class="section white center scrollspy " id="bookings">
+<div class="row">
+<div class="col m12 l12 s12">
 
+<h3> My Bookings</h3>
+<hr>
 
-  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <!-- <i class="material-icons right">send</i> -->
-  </button>
-        
-		 </form>
-		
-
-	</div>
-
-
-
-    <div class="row">
-    <div class="col m8 l8 s 12">
-    <div class="container">
-    <table class="striped">
+<table class="striped">
     	<!-- <caption> Bookings History</caption> -->
     	<thead>
     	<tr>
@@ -97,11 +134,40 @@
 
 	</tbody>
 	</table>
-	</div>
-	<br><br>
-	</div>
-	
-	</div>
+
+
+</div>
+
+</div>
+
+
+
+
+<div class="section white center scrollspy " id="contact">
+
+<h3> Contact Us</h3>
+<hr>
+In case of any problems or queries feel free to contact the admin.
+    <div class="row">
+        <div class="col m2 hide-on-small-only">
+        </div>
+        <div class="col m4 s12">
+        <img src="{% static 'basic/images/contact/person.jpg' %}" class="responsive-img" style="height:300px;width:auto;"><br>
+            Amol
+        </div>
+        <div class="col m4 s12">
+        <img src="{% static 'basic/images/contact/Anurag.jpg' %}" class="responsive-img" style="height:300px;width:auto;"><br>
+            Anurag
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+
+
 {% endblock %}
 
 

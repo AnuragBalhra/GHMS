@@ -7,12 +7,11 @@
 
 
 {% load static %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="{% static 'basic/css/materialize.min.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'basic/css/style.css' %}" />
-<script type="text/javascript" src="{% static 'basic/js/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'basic/js/materialize.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'basic/js/script.js' %}"></script>
+
 
 </head>
 <body >
@@ -25,12 +24,25 @@
     {% block content %}{% endblock %}
 
     {% block footer %}
-    <div style="position:ablolute;bottom:0px;width:100%;">
-    	<hr>
-    	<p>Thanks for visiting my site.</p>
-	</div>
+
+        <footer class="page-footer black" style="position:ablolute;bottom:0px;width:100%;">
+          
+          <div class="footer-copyright">
+            <div class="container" style="text-align: center;">
+            <div class="right">Made by Team <b>Pheonix<span style="font-size:2em;"> ( </span><span style="display:inline-block;line-height: 110%;font-size:0.8em;">Amol Thakur : B15CS006<br> Anurag : B15CS041 </span><span style="font-size:2em;"> ) </span></b>
+            </div>
+            </div>
+          </div>
+        </footer>
+
+
+    
     {% endblock %}
 
 
+{% load static %}
+<script type="text/javascript" src="{% static 'basic/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'basic/js/materialize.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'basic/js/script.js' %}"></script>
 </body>
 </html>

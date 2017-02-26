@@ -1,3 +1,115 @@
 body {
     /*background-color: green;*/
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+  }
+
+
+.parallax-container {
+      /*height: 10px;*/
+    }
+
+.parallax-container img {
+	width:150%;
+      /*height: 10px;*/
+    }
+.logo{
+	vertical-align: bottom;
+/*background-color:red;*/
+	/*padding:0px;
+	
+	width:70px;height:100%;
+	*/
+	margin-right: 50px;
+	margin-left: 50px;
+	max-width: 100px;max-height: 100px;
+
+}
+.tab a{
+	font-size: 0.5em;
+	color:white !important;
+}
+.tab {
+	width:120px;
+	font-size: 0.5em;
+	color:white !important;
+}
+#showBooking, #showUser, #showRoom{
+	display:none;
+}
+
+
+
+/*form formattings*/
+.input-field label {
+     color: #800000;
+   }
+.input-field input[type=text]:focus + label, .input-field input[type=password]:focus + label {
+     color: #800000;
+ font-weight: bold;
+   }
+.input-field input[type=text]:focus, .input-field input[type=password]:focus {
+ border-bottom: 1px solid #800000;
+ box-shadow: 0 1px 0 0 #800000;
+}
+
+.input-field .prefix.active {
+ color: #800000;
+}
+
+.input-field{
+    position: relative;
+    background-color: ;
+}
+.input-field button{
+    margin-top:-15px;
+    width:160px !important;
+    height:85px !important;
+    background-color: black
+}
+
+
+.date .box{
+	border-radius: 5px;
+	position: relative;
+	opacity: 0.5;
+	width:35px;
+	height: 40px;
+	margin:0px;
+	padding:10px;
+	border:1px solid black;
+}
+.date.True .box{
+	/*background-color: green;*/
+}
+.date{
+
+}
+.date.False .box{
+		background-image:url("../images/crossx3.png");
+	background-repeat:no-repeat;
+	border:0px;
+background-size:100%;
+	opacity:1; 
+
+	/*background-image:url("../images/crossx1.png"); */
+	/*background:"{% static 'basic/images/cross1.png' %}";*/
+	/*background-color: red;*/
+}
+.date.active .box{
+	/*background-color: green;*/
+	border:0px;
+	background-image:url("../images/tick.png");
+	background-repeat:no-repeat;
+	background-size:110%;
+	/*background:"{% static 'basic/images/tick.ico' %}";*/
+	opacity:1; 
+}
+.date.disabled .box{
+	background-color: grey;
 }
