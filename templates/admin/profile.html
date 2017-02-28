@@ -36,12 +36,12 @@
 				    <table class="striped">
 				    <caption><h5> Bookings History </h5></caption>
 				    	<tr>
-							<td>GNR</td>
-							<td>UserId</td>
-							<td>RoomId</td>
-							<td> Status </td>
-							<td>StartTime</td>
-							<td>EndTime</td>
+							<th>GNR</th>
+							<th>UserId</th>
+							<th>RoomId</th>
+							<th> Status </th>
+							<th>StartTime</th>
+							<th>EndTime</th>
 						</tr>
 
 					{% for booking in all_bookings %}	
@@ -86,11 +86,11 @@
 					<table >
 				    	<caption><h5> Users Lists </h5></caption>
 				    	<tr>
-							<td>Id</td>
-							<td>Name</td>
-							<td>Password</td>
-							<td>Email</td>
-							<td>Type</td>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Password</th>
+							<th>Email</th>
+							<th>Type</th>
 						</tr>
 
 					{% for user in usersList %}	
@@ -148,9 +148,9 @@
 					<table >
 				    	<caption><h5> Rooms Lists <h5></caption>
 				    	<tr>
-							<td>Id</td>
-							<td>Cost</td>
-							<td>Type</td>
+							<th>Id</th>
+							<th>Cost</th>
+							<th>Type</th>
 						</tr>
 
 					{% for room in roomsList %}	

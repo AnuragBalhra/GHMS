@@ -1,14 +1,31 @@
+
 import basic.person as bp
 class Administrator(bp.Person):
 	def addUser(self, request):
+		try:
+			user=bp.Person.objects.filter(Name=request.POST['Name'])
+			# raise Exception(len(user))
+			if(len(user)!=0):
+				request.session['err']='Username Exists'
+				raise Exception(request.session['err'])
+		
+			user=bp.Person.objects.filter(Email=request.POST['Email'])
+			if(len(user)!=0):
+				request.session['err']=' Email already registered '
+				raise Exception(request.session['err'])
+
+		except:
+			return None
+
+
 		if(request.POST['type']=='user'):
 			import basic.user.user as bu
 			user=bu.User.objects.create(Name=request.POST['Name'], Password=request.POST['Password'], Email=request.POST['Email'], type=request.POST['type'])
-			raise Exception(user.Id)
+			# raise Exception(user.Id)
 			return user
 		elif(request.POST['type']=='admin'):
 			admin=Administrator.objects.create(Name=request.POST['Name'], Password=request.POST['Password'], Email=request.POST['Email'], type=request.POST['type'])
-			raise Exception(admin.Id)
+			# raise Exception(admin.Id)
 			return admin
 
 	def deleteUser(self, UserId):

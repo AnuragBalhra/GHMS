@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 # Create your views here.
 
 
+# from basic.person import *
 from basic.user import *
 from basic.admin import *
 from basic.food import *
@@ -28,6 +29,7 @@ def dashboard(request):
 			usersList=None
 		try:
 			err=request.session['err']
+			request.session['err']=""
 		except:
 			err=""
 	# raise Exception(usersList)
@@ -234,14 +236,17 @@ def addObj(request):
 	try:
 		visitor=get_object_or_404(Administrator, Id=request.session['visitor']['Id'])
 		if(request.POST['typeOfObj']=='user'):
-			visitor.addUser(request)
+			if(visitor.addUser(request)==None):
+				return redirect('administrator:dashboard')
+			request.session['err']=' User Added Sucessfully'
 
 		elif(request.POST['typeOfObj']=='room'):
 			visitor.addRoom(request)
+			request.session['err']=' Room Added Sucessfully'
 		
-		# request.session['err']='Unknown Error'
-		raise Exception('Unknown Error')
+		return redirect('administrator:dashboard')
 	except:
+
 		return redirect('administrator:dashboard')
 	
 	return redirect('administrator:dashboard')
