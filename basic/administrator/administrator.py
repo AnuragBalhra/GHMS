@@ -59,17 +59,27 @@ class Administrator(bp.Person):
 		import basic.room as br
 
 		
+		allBookings=bb.Booking.objects.filter(Status=1)		# List of all Confirmed Bookings
 
-		allBookings=bb.Booking.objects.filter(Status=2)
-		rooms=br.Room.objects.filter(type=2)
+		rooms=br.Room.objects.all()
+		roomsList=[]
+		for var in rooms:
+			if (var.type==1 or var.type==2):
+				roomsList.append(var)
+		rooms=roomsList										# List of all reserved and unreserved rooms
+
 		noConflict={}
 		for x in rooms:
 			noConflict[x.Id]=True
 
+
 		for var in allBookings:
-			if(var.getStatus=='CNF'):
+			if(var.getStatus()=='CNF'):
 				if(var.conflicting(booking.StartTime, booking.EndTime)):
-					noConflict[var.RoomId.Id-1]=False
+					# raise Exception(var)
+					noConflict[var.RoomId.Id]=False
+		# raise Exception(noConflict)
+
 		for x in noConflict:
 			if(noConflict[x]):
 				# raise Exception(x)									#raise exception to print roomList

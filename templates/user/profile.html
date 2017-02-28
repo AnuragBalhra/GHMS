@@ -12,6 +12,12 @@
 {% endblock %}
 
 {% block content %}
+<script type="text/javascript">
+    var x='{{err}}';
+    if(x){
+        alert(x);
+    }
+</script>
 	<!-- Hey
     {{visitor.Id}}
     {{visitor.Name}}
@@ -30,8 +36,7 @@
     <div class="row valign-wrapper">
         <div class="col l6 m6 s12  ">
         <big>Features in IITJ Guesthouse</big>
-        <br>
-        <span >{{err}}</span>
+        
         </div>
         <div class="col l6 m6 s12">
             <div class="row">
@@ -51,6 +56,8 @@
             </div>
         </div>
     </div>
+    <br><br>
+    <b><span >{{err}}</span></b>
 <div class="row white red-text text-darken-4 " >
 			<form action="{% url 'user:search' %}" method="POST">
             {% csrf_token %}
@@ -108,6 +115,7 @@
 			<td>Status</td>
 			<td>Reason</td>
 			<td>BookingTime</td>
+            <td> Options </td>
 		</tr>
 		</thead>
 
@@ -136,6 +144,17 @@
 			<td>{{buking.getStatus}}</td>
 			<td>{{buking.Reason}}</td>
 			<td>{{buking.BookingTime}}</td>
+            <td>
+                {% if buking.getStatus == 'CNF' or buking.getStatus == 'WL' %}
+                        <form action="{% url 'user:cancel' %}" method="POST">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="GNR" value="{{ buking.GNR }}">
+                        <input type="submit" class="btn waves-effect waves-light red darken-4 valign-wrapper" value="CANCEL BOOKING">
+                        </form> 
+                        <br>
+                {% endif %}
+            </td>
 		</tr>
 	{% endfor %}
 

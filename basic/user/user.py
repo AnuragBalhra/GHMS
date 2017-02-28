@@ -8,6 +8,7 @@ class User(bp.Person):
 		import basic.guestHouse as bg
 		if(Reason!=""):
 			room=bg.GHMS.rooms[0]
+			raise Exception('asdf')
 			buking=self.requestBooking(room, checkIn, checkOut , FoodId, Reason)
 			return buking
 
@@ -16,6 +17,7 @@ class User(bp.Person):
 
 		if(isinstance(roomsList, dict) ):
 			# raise Exception(roomsList)
+			bg.GHMS.update()
 			return roomsList
 		else:
 			# raise Exception(roomsList)
@@ -23,7 +25,9 @@ class User(bp.Person):
 			# cost=rum.cost
 			# raise Exception(rum.Cost)
 			buking=self.requestBooking(roomsList, checkIn, checkOut, FoodId)
+			bg.GHMS.update()
 			# raise Exception(buking)
+			# del roomsList
 			return buking
 
 

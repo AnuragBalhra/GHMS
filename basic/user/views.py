@@ -3,6 +3,9 @@ from django.template.loader import get_template
 from django.template import Template,Context
 
 from django.shortcuts import get_object_or_404, render, redirect
+import datetime
+# from django.db import connections, transaction
+from django.core.cache import cache
 
 
 
@@ -49,8 +52,25 @@ def dashboard(request):						# view to show User Profile
     # return HttpResponse("User Hello world")
 
 
-
 def search(request):
+	cache.clear()
+	# current_date=datetime.datetime.now().date()
+	# raise Exception(current_date)
+	current_date=datetime.datetime.now().date()
+
+	try:
+		checkIn=datetime.datetime.strptime(request.POST['checkIn'], "%Y-%m-%d").date()
+		checkOut=datetime.datetime.strptime(request.POST['checkOut'], "%Y-%m-%d").date()
+
+
+		if(checkIn< current_date or checkOut< current_date):
+			request.session['err']=' cannot book past dates...'
+			return redirect('user:dashboard')		
+		if(checkIn> checkOut):
+			request.session['err']=' CheckIn date must be before Checkout date...'
+			return redirect('user:dashboard')
+	except:
+		pass
 	visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
 	try:
 		if(request.POST['FoodId']):
@@ -73,14 +93,17 @@ def search(request):
 	try:
 		if(isinstance(obj, Booking)):
 			request.session['showBooking']=obj.GNR
+			request.session['err']='Booking Successfull save GNR '+ str(obj.GNR) + ' for future refrence'
 			return redirect('user:dashboard')
 		# raise Exception('Not Entereing')
 		# raise Exception(obj)
 		
 		request.session['showRooms']=obj
-		request.session['request']=request.POST;
+		request.session['request']=request.POST
+		del obj
 		return redirect('user:showRooms')
 	except:
+		del obj
 		return redirect('user:showRooms')
 
 	return HttpResponse(available_rooms)
@@ -132,6 +155,7 @@ def cancel(request):
 	# try:
 	visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
 	visitor.cancelBooking(booking)
+	request.session['err']='Booking Successfully cancelled'
 	return redirect('user:dashboard')
 	# except:
 		# return redirect('user:dashboard')

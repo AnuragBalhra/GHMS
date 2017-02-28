@@ -26,8 +26,12 @@ def dashboard(request):
 			all_bookings=None
 			roomsList=None
 			usersList=None
+		try:
+			err=request.session['err']
+		except:
+			err=""
 	# raise Exception(usersList)
-	return render(request, 'admin/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'roomsList':roomsList, 'usersList':usersList})
+	return render(request, 'admin/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'roomsList':roomsList, 'usersList':usersList, 'err':err})
 
 
 def search(request):
@@ -185,7 +189,10 @@ def confirm(request):
 			request.session['err']='Unknown Error'
 			raise Exception('Unknown Error')
 	except:
+		request.session['err']='No rooms Available...Cannot Confirm'
 		return redirect('administrator:dashboard')
+
+
 	
 	return redirect('administrator:dashboard')
 

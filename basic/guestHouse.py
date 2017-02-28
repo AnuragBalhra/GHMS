@@ -13,8 +13,10 @@ class guestHouse:
 		# return None
 		self.rooms=bd.DBMS.getRooms('user')
 		# raise Exception(self.bookings)
-
-
+	def update(self):
+		self.bookings=bd.DBMS.getBookings('user')
+		self.rooms=bd.DBMS.getRooms('user')
+		# raise Exception(self.bookings)
 	# def checkUser(self, email, pass):
 	def bookRoom(self, usr, flat, checkIn, checkOut, FoodId, reason=""):
 		# raise Exception(usr)
@@ -82,7 +84,6 @@ class guestHouse:
 					noConflict[var.RoomId.Id]=False
 		# for x in roomsList:
 		# raise Exception(noConflict)
-
 
 		for x in noConflict:
 			if(noConflict[x]):
