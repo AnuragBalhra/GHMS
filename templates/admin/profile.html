@@ -33,6 +33,7 @@
 							<td>GNR</td>
 							<td>UserId</td>
 							<td>RoomId</td>
+							<td> Status </td>
 							<td>StartTime</td>
 							<td>EndTime</td>
 						</tr>
@@ -45,7 +46,14 @@
 							</form>
 							<td>{{booking.GNR}}</td>
 							<td>{{booking.UserId}}</td>
-							<td>{{booking.RoomId}}</td>
+							<td>
+								{% if booking.getStatus == 'CNF' %}
+				                    {{booking.RoomId}}
+				                {% else %}
+				                     None
+				                {% endif %}
+							</td>
+							<td> {{booking.getStatus}}</td>
 							<td>{{booking.StartTime}}</td>
 							<td>{{booking.EndTime}}</td>
 						</tr>
@@ -102,17 +110,17 @@
 
 		            <h4>Add User</h4><br>
 		            <input type="hidden" name="typeOfObj" value="user">
-					Name <input type="text" name='Name'>
-					Password <input type="text" name='Password'>
-					Email <input type="text" name='Email'>
+					Name <input type="text" name='Name' class="validate" required="" aria-required="true">
+					Password <input type="password" name='Password' class="validate" required="" aria-required="true">
+					Email <input type="email" name='Email' class="validate" required="" aria-required="true">
 					<div class="input-field col s12">
-		            Type:<select name="type"  class="browser-default" >
+		            Type:<select name="type"  class="validate" required="" aria-required="true">
 
 		            	<option value='admin'>Admin</option>
 		            	<option value='user'>User</option>
 		            	</select>
 		            </div> 
-					<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					<button class="btn waves-effect waves-light red darken-4" type="submit" name="action">Submit
 					    <!-- <i class="material-icons right">send</i> -->
 					</button>
 				</form>
@@ -161,16 +169,16 @@
 
 	            <h4>Add Room</h4><br>
 	            <input type="hidden" name="typeOfObj" value="room">
-				Cost <input type="text" name='Cost'>
+				Cost <input type="number" min='1' step='1' name='Cost' class="validate" required="" aria-required="true">
 				<div class="input-field col s12">
-	            Type:<select name="type"  class="browser-default" >
+	            Type:<select name="type" class="validate" required="" aria-required="true">
 
 	            	<option value='1'>Unreserved</option>
 	            	<option value='2'>Reserved</option>
 	            	<option value='3'>Not Available</option>
 	            	</select>
 	            </div> 
-				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+				<button class="btn waves-effect waves-light red darken-4" type="submit" name="action">Submit
 				    <!-- <i class="material-icons right">send</i> -->
 				</button>
 				</form>

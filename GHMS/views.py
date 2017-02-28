@@ -61,6 +61,7 @@ def login(request):
 	except:
 		request.session['err']="Not already logged In"
 		request.session['logged_in']=False
+	
 
 	if 'username' in request.POST and 'password' in request.POST and 'type' in request.POST:
 		username=request.POST['username']
@@ -111,6 +112,7 @@ def logout(request):
 		del request.session['visitor']
 		request.session.flush()
 		request.session['err']="Successfully logged out"
+		request.session['logged_in']=False
 
 	except:
 		pass

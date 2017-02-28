@@ -1,5 +1,5 @@
 		<table class="striped">
-	    	<caption><h5> Rooms Details </h5></caption>
+	    	<caption><h5> Room Details </h5></caption>
 	    	<tr>
 				<td>Id</td>
 				<td>Cost</td>
@@ -16,7 +16,7 @@
 		            {% csrf_token %}
 
 					<input type="hidden" name="RoomId" value="{{ room.Id }}">
-					<input type="submit" value=" Delete Room ">
+					<input type="submit" value=" Delete Room " class="btn waves-effect waves-light red darken-4 valign-wrapper">
 					</form>
 
 

@@ -4,6 +4,14 @@
 
 {% block menu %}
 {% load static %}
+<script>
+// $(document).ready(function(){
+    var x="{{err}}";
+    if(x){
+        alert(x);
+    }
+// });
+</script>
     <nav class="white " role="navigation" style="height:100px;line-height:100px;">
         <div class="nav-wrapper  valign-wrapper">
         <ul>
@@ -46,6 +54,7 @@
     <div class="row valign-wrapper">
         <div class="col l6 m6 s12  ">
         <big>Features in IITJ Guesthouse</big>
+        
         </div>
         <div class="col l6 m6 s12">
             <div class="row">
@@ -65,23 +74,23 @@
             </div>
         </div>
     </div>
-
+    <br><br>
+        <b><span >{{err}}</span></b>
     <div class="row white red-text text-darken-4 " >
-        <span style="color:red;">{{err}}</span>
             <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
 
             <div class="input-field col l3 m3 s12">
                 <i class="material-icons prefix">account_circle</i>
-                <input type="text" name="username"><label for="username">Username</label>
+                <input type="text" name="username" class="validate" required="" aria-required="true"><label for="username">Username</label>
             </div>
             <div class="input-field col l3 m3 s12">
                 <i class="material-icons prefix">security</i>
-                <input type="password" name="password"><label for="password">Password</label>
+                <input type="password" name="password" class="validate" required="" aria-required="true"><label for="password">Password</label>
             </div>
             <div class="input-field col l4 m4 s12">
                 <i class="material-icons prefix">verified_user</i>
-                <select name="type" class="select" >
+                <select name="type" class="select validate" required="" aria-required="true">
                     <option value='' disabled selected class="option">Choose Account Type</option>
                 	<option value='admin' class="option">Admin</option>
                 	<option value='user' class="option">Student</option>

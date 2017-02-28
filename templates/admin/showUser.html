@@ -1,5 +1,5 @@
 		<table class="striped">
-	    	<caption><h5> Users Lists </h5></caption>
+	    	<caption><h5> User Details </h5></caption>
 	    	<tr>
 				<td>Id</td>
 				<td>Name</td>
@@ -20,7 +20,7 @@
 		            {% csrf_token %}
 
 					<input type="hidden" name="UserId" value="{{ user.Id }}">
-					<input type="submit" value=" Delete User ">
+					<input type="submit" value=" Delete User " class="btn waves-effect waves-light red darken-4 valign-wrapper">
 					</form>
 
 

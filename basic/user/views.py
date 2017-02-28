@@ -27,21 +27,25 @@ def dashboard(request):						# view to show User Profile
 	except:
 		err=""								# remove any preceding errors
 
-	if request.session['visitor']['type']=='admin':				
-		visitor=get_object_or_404(Administrator, Id=request.session['visitor']['Id'])
-		try:
-			all_bookings=DBMS.getBookings('admin')
-		except:
-			all_bookings=None
+	try:
+		if request.session['visitor']['type']=='admin':				
+			visitor=get_object_or_404(Administrator, Id=request.session['visitor']['Id'])
+			try:
+				all_bookings=DBMS.getBookings('admin')
+			except:
+				all_bookings=None
 
-	else:
-		visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
-		try:
-			all_bookings=DBMS.getBookings('user', visitor)
-		except:
-			all_bookings=None
+		else:
+			visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
+			try:
+				all_bookings=DBMS.getBookings('user', visitor)
+			except:
+				all_bookings=None
 
-	return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'err':err})
+		return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'err':err})
+	except:
+		request.session['err']='Not logged In...Please log in to continue'		
+		return redirect('login')
     # return HttpResponse("User Hello world")
 
 

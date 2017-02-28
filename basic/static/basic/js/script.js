@@ -18,7 +18,8 @@ $(document).ready(function(){
 
 
 	$('.bookings_form').on('click',function(){
-		$('#showBooking').fadeOut("slow");
+		$('#showBooking').fadeOut("slow").delay(500);
+
 		var bookingData=$(this).find( 'form' ).serialize();
 		var url=$(this).find( 'form' ).attr("action");
 		$.ajax({
@@ -28,7 +29,7 @@ $(document).ready(function(){
            success: function(data)
            {
         		$('#showBooking').html(data); // show response from the php script.
-				$('#showBooking').fadeIn("slow");
+				$('#showBooking').delay(500).fadeIn("slow");
 
            }
          });
@@ -36,7 +37,7 @@ $(document).ready(function(){
 
 
 	$('.users_form').on('click',function(){
-		$('#showUser').fadeOut("slow");
+		$('#showUser').fadeOut("slow").delay(500);
 		var userData=$(this).find( 'form' ).serialize();
 		var url=$(this).find( 'form' ).attr("action");
 		$.ajax({
@@ -46,13 +47,13 @@ $(document).ready(function(){
            success: function(data)
            {
                $('#showUser').html(data); // show response from the php script.
-				$('#showUser').fadeIn("slow");
+				$('#showUser').delay(500).fadeIn("slow");
            }
          });
 	});
 
 	$('.rooms_form').on('click',function(){
-		$('#showRoom').fadeOut("slow");
+		$('#showRoom').fadeOut("slow").delay(500);
 		var roomData=$(this).find( 'form' ).serialize();
 		var url=$(this).find( 'form' ).attr("action");
 		$.ajax({
@@ -62,7 +63,7 @@ $(document).ready(function(){
            success: function(data)
            {
                $('#showRoom').html(data); // show response from the php script.
-				$('#showRoom').fadeIn("slow");
+				$('#showRoom').delay(500).fadeIn("slow");
            }
          });
 	});
@@ -100,6 +101,8 @@ $('.date.True').on('click',function(){
 	// alert("asd");
 	var room=$(this).attr('id').split('_')[0];
 	var date=$(this).attr('id').split('_')[1];
+	console.log('date = ');
+	console.log(date);
 
 	// alert(date);
 	if(room==roomId){
@@ -141,6 +144,44 @@ $('.date.True').on('click',function(){
 			}
 			else if(date>checkIn && date<=checkOut){
 				checkOut=date;
+			}
+			else if(date<checkIn){
+				console.log('test');
+				var lowestPossibleDate=0;
+				console.log($(this).attr('id').split('_')[1]);
+				var startDate=checkIn;
+				var error=0;
+				$(this).siblings('td').each(function(){
+					console.log($(this).attr('id').split('_')[1] + " != "+date);//.attr('id').split('_')[1]);
+
+					if ($(this).attr('id').split('_')[1] <=startDate){
+						if($(this).hasClass('False')!=true && lowestPossibleDate==0){
+							lowestPossibleDate=$(this).attr('id').split('_')[1];
+							console.log('lowestPossibleDate = ');
+							console.log(lowestPossibleDate);
+						}
+
+						if($(this).attr('id').split('_')[1] >startDate){							
+							return false;
+						}
+						else{
+							if($(this).hasClass('False') && $(this).attr('id').split('_')[1] >=date){
+								lowestPossibleDate=0;
+								error=1;
+								// return false;
+							}
+
+						}
+					}
+
+				});
+				if(error==0){
+					checkIn=date;  // if no Invalid dates are found then checkIn = current date 
+				}
+				else{
+					alert('Invalid Dates Selected ');
+					checkIn=lowestPossibleDate;
+				}
 			}
 			else{
 				var endDate=checkOut;

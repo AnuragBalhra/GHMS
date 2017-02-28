@@ -81,7 +81,7 @@ class guestHouse:
 				if(var.conflicting(checkIn, checkOut)):
 					noConflict[var.RoomId.Id]=False
 		# for x in roomsList:
-			# raise Exception(noConflict[x])
+		# raise Exception(noConflict)
 
 
 		for x in noConflict:
@@ -91,6 +91,7 @@ class guestHouse:
 				rum=bd.DBMS.getRooms('user',x)
 				return rum
 				
+		# raise Exception(roomsList)
 
 		return roomsList
 	def checkBookingStatus(self, GNR):

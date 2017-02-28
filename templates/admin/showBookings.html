@@ -23,7 +23,13 @@
 				</form>
 				<td>{{booking.GNR}}</td>
 				<td>{{booking.UserId}}</td>
-				<td>{{booking.RoomId}}</td>
+				<td>
+					{% if booking.getStatus == 'CNF' %}
+	                    {{booking.RoomId}}
+	                {% else %}
+	                     None
+	                {% endif %}
+				</td>
 				<td>{{booking.FoodId}}</td>
 				<td>{{booking.StartTime}}</td>
 				<td>{{booking.EndTime}}</td>
@@ -40,15 +46,16 @@
 			            {% csrf_token %}
 
 						<input type="hidden" name="GNR" value="{{ booking.GNR }}">
-						<input type="submit" value="CANCEL BOOKING">
-						</form>
+						<input type="submit" class="btn waves-effect waves-light red darken-4 valign-wrapper" value="CANCEL BOOKING">
+						</form>	
+						<br>
 
 						{% if booking.getStatus == 'WL' %}
 							<form action="{% url 'administrator:confirm' %}" method="POST">
 			        	    {% csrf_token %}
 
 							<input type="hidden" name="GNR" value="{{ booking.GNR }}">
-							<input type="submit" value="APPROVE BOOKING">
+							<input type="submit" class="btn waves-effect waves-light green darken-4 valign-wrapper" value="APPROVE BOOKING">
 							</form>
 						{% endif %}
 					
