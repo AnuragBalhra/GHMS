@@ -8,7 +8,7 @@ class User(bp.Person):
 		import basic.guestHouse as bg
 		if(Reason!=""):
 			room=bg.GHMS.rooms[0]
-			raise Exception('asdf')
+			# raise Exception('asdf')
 			buking=self.requestBooking(room, checkIn, checkOut , FoodId, Reason)
 			return buking
 
