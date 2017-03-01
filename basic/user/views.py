@@ -70,6 +70,8 @@ def search(request):
 			request.session['err']=' CheckIn date must be before Checkout date...'
 			return redirect('user:dashboard')
 	except:
+		request.session['err']=' Please Select dates... '
+		return redirect('user:dashboard')
 		pass
 	visitor=get_object_or_404(User, Id=request.session['visitor']['Id'])
 	try:
