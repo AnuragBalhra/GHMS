@@ -1,3 +1,14 @@
+$(window).load(function(){
+	var href=window.location.href.split('#')[1].split('_')[0];
+	console.log(href);
+
+	if(href!=""){
+		console.log($('#'+href).offset().top);
+		scroll($('#'+href).offset().top);
+
+	}	
+});
+
 
 $(document).ready(function(){
 
@@ -72,23 +83,20 @@ $(document).ready(function(){
 		scroll( );
 
 	});
-	// $('#logout').on('click',function(){
-	// 	alert('logout');
-		// window.location='../logout/';
-	// });
+	
+
+	$('.scrollNav li a').on('click',function(event){
+		event.preventDefault();
+		gotoClass=$(this).attr('href');
+		scroll($(gotoClass).offset().top);
+		console.log($(gotoClass).offset().top);
+			
+	});
 
 
-
-	  	 // alert($( this ).find( 'input' ).attr( "name"));
-	  	 // alert($( this ).find( 'input' ).attr( "value"));
-	  	// $(this).find('form:first').submit();
-			// alert($(this).find('input');
-      
-
-
-	console.log('asd');
 
 });
+
 
 
 $('.err').on('click', function(){
@@ -271,6 +279,7 @@ function bookRoom(){
 
 function scroll(final_pos=0){
 	var body = $("html, body");
-	body.stop().animate({scrollTop:final_pos}, '1000', 'swing');
+	body.stop().animate({scrollTop:final_pos}, 1500, 'swing');
 
 }
+

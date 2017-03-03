@@ -23,16 +23,13 @@
     </nav>
 <nav class="red darken-4" role="navigation" style="height:35px;line-height:30px;">
         <div class="nav-wrapper container">
-          <ul class="right hide-on-med-and-down">
+          <ul class="right  scrollNav">
           <li><a href="#home">Home</a></li>
           <li><a href="#login">Login</a></li>
          <li><a href="#contact">Contact</a></li>
           </ul>
           
-          <ul id="nav-mobile" class="side-nav">
-            <li><a href="#">Navbar Link</a></li>
-          </ul>
-          <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+          
         </div>
     </nav>
 
@@ -43,12 +40,12 @@
 
 {% load static %}
 <!-- <img src="{% static 'basic/images/back.jpg' %} "> -->
-    <div class="parallax-container hide-on-small-only scrollspy" id="home">
+    <div class="parallax-container hide-on-small-only" id="home">
       <div class="parallax"><img src="{% static 'basic/images/background/newhostels.png' %} "></div>
     </div>
         
 
-<div class="section black white-text text-lighten-2 scrollspy" id="login">
+<div class="section black white-text text-lighten-2 " id="login">
 
     <div class="container " style="border-radius:20px;">
     <div class="row valign-wrapper">
@@ -108,7 +105,7 @@
 </div>
 
 
-<div class="section white center scrollspy " id="contact">
+<div class="section white center " id="contact">
 
 <h3> Contact Us</h3>
 <hr>

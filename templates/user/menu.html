@@ -13,12 +13,12 @@
 <nav class="red darken-4" role="navigation" style="height:35px;line-height:30px;">
         <div class="nav-wrapper container">
         <ul class=" red darken-4 " style="height:35px;line-height:30px;display:inline-block;" >
-            <li ><a  href="{% url 'user:dashboard' %}#home">Home</a></li>
-            <li ><a  href="{% url 'user:dashboard' %}#bookings">Bookings</a></li>
+            <li ><a  href="{% url 'user:dashboard' %}#home_hash" onclick="location.reload()">Home</a></li>
+            <li ><a  href="{% url 'user:dashboard' %}#bookings_hash" onclick="location.reload()">Bookings</a></li>
            <!-- <li ><a  href="{% url 'user:dashboard' %}#gallery">Gallery</a></li> -->
-           <li ><a  href="{% url 'user:dashboard' %}#contact">Contact Us</a></li>
+           <li ><a  href="{% url 'user:dashboard' %}#contact_hash" onclick="location.reload()">Contact Us</a></li>
         </ul>
-        <ul class="right  hide-on-med-and-down  red darken-4 " style="height:35px;line-height:30px;display:inline-block;" >
+        <ul class="right   red darken-4 " style="height:35px;line-height:30px;display:inline-block;" >
            <li ><small>Welcome {{ visitor.Name }}</small></li>
            <li ><a  href="#" onclick="window.location='{% url 'logout' %}'" id='logout'> Logout</a></li>
         </ul>
