@@ -17,23 +17,27 @@ from basic.dataBase import *
 
 
 def dashboard(request):
-	if request.session['visitor']['type']=='admin':
-		visitor=get_object_or_404(Administrator, Id=request.session['visitor']['Id'])
-		try:
-			all_bookings=DBMS.getBookings('admin')
-			roomsList=DBMS.getRooms('admin')
-			usersList=DBMS.getUsers()
-		except:
-			all_bookings=None
-			roomsList=None
-			usersList=None
-		try:
-			err=request.session['err']
-			request.session['err']=""
-		except:
-			err=""
-	# raise Exception(usersList)
-	return render(request, 'admin/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'roomsList':roomsList, 'usersList':usersList, 'err':err})
+	try:
+		if request.session['visitor']['type']=='admin':
+			visitor=get_object_or_404(Administrator, Id=request.session['visitor']['Id'])
+			try:
+				all_bookings=DBMS.getBookings('admin')
+				roomsList=DBMS.getRooms('admin')
+				usersList=DBMS.getUsers()
+			except:
+				all_bookings=None
+				roomsList=None
+				usersList=None
+			try:
+				err=request.session['err']
+				request.session['err']=""
+			except:
+				err=""
+		# raise Exception(usersList)
+		return render(request, 'admin/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'roomsList':roomsList, 'usersList':usersList, 'err':err})
+	except:
+		request.session['err']='Not logged In...Please log in to continue'
+		return redirect('login')
 
 
 def search(request):

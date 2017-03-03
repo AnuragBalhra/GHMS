@@ -18,7 +18,7 @@ $(document).ready(function(){
 
 
 	$('.bookings_form').on('click',function(){
-		$('#showBooking').fadeOut("slow").delay(500);
+		$('#showBooking').fadeOut("slow");
 
 		var bookingData=$(this).find( 'form' ).serialize();
 		var url=$(this).find( 'form' ).attr("action");
@@ -29,15 +29,16 @@ $(document).ready(function(){
            success: function(data)
            {
         		$('#showBooking').html(data); // show response from the php script.
-				$('#showBooking').delay(500).fadeIn("slow");
+				$('#showBooking').fadeIn("slow");
 
            }
          });
+		scroll( );
 	});
 
 
 	$('.users_form').on('click',function(){
-		$('#showUser').fadeOut("slow").delay(500);
+		$('#showUser').fadeOut("slow");
 		var userData=$(this).find( 'form' ).serialize();
 		var url=$(this).find( 'form' ).attr("action");
 		$.ajax({
@@ -47,13 +48,15 @@ $(document).ready(function(){
            success: function(data)
            {
                $('#showUser').html(data); // show response from the php script.
-				$('#showUser').delay(500).fadeIn("slow");
+				$('#showUser').fadeIn("slow");
            }
          });
+		scroll();
+
 	});
 
 	$('.rooms_form').on('click',function(){
-		$('#showRoom').fadeOut("slow").delay(500);
+		$('#showRoom').fadeOut("slow");
 		var roomData=$(this).find( 'form' ).serialize();
 		var url=$(this).find( 'form' ).attr("action");
 		$.ajax({
@@ -63,9 +66,11 @@ $(document).ready(function(){
            success: function(data)
            {
                $('#showRoom').html(data); // show response from the php script.
-				$('#showRoom').delay(500).fadeIn("slow");
+				$('#showRoom').fadeIn("slow");
            }
          });
+		scroll( );
+
 	});
 	// $('#logout').on('click',function(){
 	// 	alert('logout');
@@ -259,4 +264,13 @@ function bookRoom(){
     // $.post("process.php", $("#reg-form").serialize(), function(data) {
     //     alert(data);
     // });
+}
+
+
+
+
+function scroll(final_pos=0){
+	var body = $("html, body");
+	body.stop().animate({scrollTop:final_pos}, '1000', 'swing');
+
 }
