@@ -44,8 +44,9 @@ def dashboard(request):						# view to show User Profile
 				all_bookings=DBMS.getBookings('user', visitor)
 			except:
 				all_bookings=None
+		CurrentTime=datetime.datetime.now().date()
 
-		return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'err':err})
+		return render(request, 'user/profile.html',{'visitor':visitor,'all_bookings':all_bookings,'err':err,'CurrentTime':CurrentTime})
 	except:
 		request.session['err']='Not logged In...Please log in to continue'		
 		return redirect('login')

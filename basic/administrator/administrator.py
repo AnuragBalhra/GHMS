@@ -1,4 +1,4 @@
-
+import datetime
 import basic.person as bp
 class Administrator(bp.Person):
 	def addUser(self, request):
@@ -75,8 +75,7 @@ class Administrator(bp.Person):
 		import basic.booking as bb
 		import basic.room as br
 
-		
-		allBookings=bb.Booking.objects.filter(Status=1)		# List of all Confirmed Bookings
+		allBookings=bb.Booking.objects.filter(StartTime__gte = datetime.datetime.now().date()).filter(Status=1)		# List of all Confirmed Bookings after today
 
 		rooms=br.Room.objects.all()
 		roomsList=[]
@@ -105,6 +104,7 @@ class Administrator(bp.Person):
 				booking.setStatus('CNF')
 				# raise Exception(x+1)
 				if(bd.DBMS.store(booking)=='Success'):
+					# raise Exception("TKC")9-
 					return 'Confirmed'
 		raise Exception('Cannot Confirm Booking')
 

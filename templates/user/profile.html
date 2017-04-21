@@ -146,6 +146,7 @@
 			<td>{{buking.BookingTime}}</td>
             <td>
                 {% if buking.getStatus == 'CNF' or buking.getStatus == 'WL' %}
+                    {% if buking.StartTime > CurrentTime %}
                         <form action="{% url 'user:cancel' %}" method="POST">
                         {% csrf_token %}
 
@@ -153,6 +154,7 @@
                         <input type="submit" class="btn waves-effect waves-light red darken-4 valign-wrapper" value="CANCEL BOOKING">
                         </form> 
                         <br>
+                        {% endif %}
                 {% endif %}
             </td>
 		</tr>

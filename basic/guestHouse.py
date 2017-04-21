@@ -4,6 +4,7 @@ import basic.booking as bb
 import basic.dataBase as bd
 import datetime
 from django.contrib.sessions.backends.db import SessionStore
+from django.shortcuts import get_object_or_404, render, redirect
 
 
 class guestHouse:
@@ -126,8 +127,31 @@ class guestHouse:
 		booking=bd.DBMS.getBookings('user', None, None, GNR)
 		if(booking.getStatus()=='WL' or booking.getStatus()=='CNF'):
 			booking.setStatus('CANCEL')
-			booking.save()
+			bd.DBMS.store(booking)
+			# raise Exception(datetime.datetime.now().date())
+			# from basic.dataBase import DBMS
+			from basic.admin import Administrator
+			
+			try:
+				bookings=bb.Booking.objects.filter(StartTime__gte = datetime.datetime.now().date())
+
+				# bookings=bd.DBMS.getBookings('admin')	# fetch corresponding booking
+
+			except:
+				pass
+			# raise Exception(bookings)
+
+			try:
+				visitor=get_object_or_404(Administrator, Id=1)
+				for buking in bookings:
+					if(buking.getStatus()=='WL'):
+						visitor.confirmBooking(buking)
+						# raise Exception(buking.GNR) 
+			except:
+				pass
+			# raise Exception(buking.GNR) 
 			return 'Success'
+
 		elif(booking.getStatus()=='CANCEL'):
 			return 'Already Cancelled'
 		return 'Cannot Cancel'

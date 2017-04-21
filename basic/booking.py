@@ -49,6 +49,9 @@ class Booking(models.Model):
 		ordering = ['GNR']
 
 	def conflicting(self, StartTime, EndTime):
+		# raise Exception(StartTime)
+		if(StartTime<datetime.now().date() ):
+			raise False
 		if(self.EndTime<StartTime or self.StartTime>EndTime):
 			return False
 		return True

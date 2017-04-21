@@ -44,6 +44,8 @@ class dataBase:
 			if(GNR!=0):
 				bookings=bb.Booking.objects.get(GNR=GNR)
 				return bookings
+			# bookings=bb.Booking.objects.all()
+			# return bookings
 			
 		else:
 			if(usr!=None):

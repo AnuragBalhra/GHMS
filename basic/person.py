@@ -23,6 +23,7 @@ class Person(models.Model):
 		return(DB.DBMS.check(username,password, type))
 
 	def cancelBooking(self, buking):
+		# raise Exception(buking.GNR) 
 		import basic.guestHouse as bg
 		try:
 			if(buking.UserId.Id != self.Id and self.type != 'admin'):
