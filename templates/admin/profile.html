@@ -27,6 +27,7 @@
 	   	<div class="col m12" id="bookings">
 	   		<div class="row">
 	   		<div class="col m12" id="showBooking">
+	   		<center><span style="font-size:0.8em;" >Click on any Booking to display details...</span></center>
 
 	   		</div>
 	   		</div>
@@ -77,7 +78,7 @@
    	<div class="col m12" id="users">
    			<div class="row">
 	   		<div class="col m12" id="showUser">
-
+	   		<center><span style="font-size:0.8em;" >Click on any Guest to display more details...</span></center>
 	   		</div>
 	   		</div>
 	   	<div class="row">
@@ -101,7 +102,7 @@
 							</form>
 							<td>{{user.Id}}</td>
 							<td>{{user.Name}}</td>
-							<td>{{user.Password}}</td>
+							<td>**********</td>
 							<td>{{user.Email}}</td>
 							<td>{{user.type}}</td>
 						</tr>
@@ -123,7 +124,7 @@
 		            Type:<select name="type"  class="validate" required="" aria-required="true">
 
 		            	<option value='admin'>Admin</option>
-		            	<option value='user'>User</option>
+		            	<option value='user'>Guest</option>
 		            	</select>
 		            </div> 
 					<button class="btn waves-effect waves-light red darken-4" type="submit" name="action">Submit
@@ -137,6 +138,7 @@
    	<div class="col m12" id="rooms">
 			<div class="row">
 	   		<div class="col m12" id="showRoom">
+	   		<center><span style="font-size:0.8em;" >Click on any Room to display more details...</span></center>
 
 	   		</div>
 	   		</div>
